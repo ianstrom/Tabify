@@ -1,28 +1,21 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 import ProjectCard from "./ProjectCard";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function FeaturedTablature({user, setProjectToView}){
-    const [featuredProjects, setFeaturedProjects] = useState([])
+function FeaturedTablature({ user, setProjectToView, featuredTabs }) {
+    const navigate = useNavigate()
+    const featuredProjectsToDisplay = featuredTabs ? featuredTabs.map((tab) => {
+        return <ProjectCard key={tab.id} user={user} tab={tab} setProjectToView={setProjectToView} />
+    }) : null;
 
-    useEffect(() => {
-        fetch('/tabs')
-        .then(res => res.json())
-        .then(data => {
-            setFeaturedProjects(data)
-        }
-        )
-    }, [])
-
-    const featuredProjectsToDisplay = featuredProjects.map((tab) => {
-        return <ProjectCard user={user} tab={tab} setProjectToView={setProjectToView} />
-    })
+    const handleClick = () => {
+        navigate("/tablature")
+    }
 
     return (
-        <div className='h-auto w-3/4 flex flex-col items-start border rounded-md mb-10 mt-10'>
-            <h1 className="text-6xl mb-4 ml-2 mt-2">Featured Tablature</h1>
-            <div className="m-2 gap-2 flex flex-wrap">
+        <div className='h-auto max-w-full mx-auto flex flex-col border rounded-md mb-10 mt-10 flex-grow'>
+            <h1 onClick={handleClick} className="text-4xl mx-auto md:text-6xl cursor-pointer mb-4 ml-6 mt-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:text-indigo-700 hover:scale-105">Tablature</h1>
+            <div className="m-2 items-center md:m-4 max-w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {featuredProjectsToDisplay}
             </div>
         </div>

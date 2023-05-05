@@ -2,6 +2,7 @@
 from flask import request, session, jsonify, make_response
 from flask_restful import Resource
 from models import db, User, Review, Tab, TabData
+from sqlalchemy import and_
 from config import app, api, db
 
 app.secret_key = b'kyushikiscool'
@@ -13,8 +14,11 @@ class CheckSession(Resource):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if not user:
             return make_response(jsonify({'error' : "User not found"}), 401)
-        return make_response(jsonify(user.to_dict(only=('username', 'id', 'tabs'))), 200)
-    
+        user.all_tabs = []
+        for t in Tab.query.filter(Tab.visibility == True).limit(8):
+            if t.user_id != session.get('user_id'):
+                user.all_tabs.append(t.to_dict())
+        return make_response(jsonify(user.to_dict(only=('username', 'id', 'tabs', 'all_tabs'))), 200)
 api.add_resource(CheckSession, '/check_session')
 
 class Logout(Resource):
@@ -41,9 +45,9 @@ class Signup(Resource):
         data = request.get_json()
         user = User.query.filter(User.username == data.get('username')).first()
         if user:
-            return make_response(jsonify({'error':"Username already taken"}), 409)
-        user = User()
-        user.from_dict(data)
+            return make_response(jsonify({'error': "Username already taken"}), 409)
+        user = User(username=data['username'])
+        user.password_hash = data['password']
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
@@ -68,13 +72,16 @@ api.add_resource(Reviews, '/reviews/<int:id>')
     
 class Tabs(Resource):
     def get(self):
-        tabs = [t.to_dict() for t in Tab.query.filter(Tab.visibility == True and Tab.user_id != session.get('user_id'))]
+        tabs = []
+        for t in Tab.query.filter(Tab.visibility == True):
+            if t.user_id != session.get('user_id'):
+                tabs.append(t.to_dict())
         return make_response(jsonify(tabs), 200)
     
     def post(self):
         data = request.get_json()
         try:
-            tab = Tab(user_id=session.get('user_id'), title=data['title'], artist=data['artist'], bpm=data['bpm'],  capo=data['capo'], tuning=data['tuning'])
+            tab = Tab(user_id=session.get('user_id'), title=data['title'], artist=data['artist'], bpm=int(data['bpm']),  capo=int(data['capo']), tuning=data['tuning'])
             db.session.add(tab)
             db.session.commit()
         except ValueError as e:
@@ -84,13 +91,23 @@ class Tabs(Resource):
 api.add_resource(Tabs, '/tabs')
 
 class TabById(Resource):
-    def patch(self, id):
+    def get(self, id):
         tab = Tab.query.filter(Tab.id == id).first()
         if not tab:
             return make_response(jsonify({'error': "Tab not found"}), 404)
+        elif not tab.visibility and not tab.user_id == session.get('user_id'):
+            return make_response(jsonify({'error': "Tab not found"}), 404)
+        else:
+            return make_response(jsonify(tab.to_dict()), 200)
+
+    def patch(self, id):
+        tab = Tab.query.filter(Tab.id == id).first()
+        if not tab or not tab.user_id == session.get('user_id'):
+            return make_response(jsonify({'error': "Tab not found"}), 404)
         data = request.get_json()
         try:
-            tab.from_dict(data)
+            for attr in data:
+                setattr(tab, attr, data[attr])
             db.session.commit()
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}), 422)
@@ -98,7 +115,7 @@ class TabById(Resource):
     
     def delete(self, id):
         tab = Tab.query.filter(Tab.id == id).first()
-        if not tab:
+        if not tab or not tab.user_id == session.get('user_id'):
             return make_response(jsonify({'error': "Tab not found"}), 404)
         db.session.delete(tab)
         db.session.commit()
@@ -113,6 +130,8 @@ class TabDataByTabId(Resource):
     
     def post(self, id):
         data = request.get_json()
+        if not session.get('user_id') == Tab.query.filter(Tab.id == id).first().user_id:
+            return make_response(jsonify({'error': "Request not allowed"}), 404)
         for note in data:
             duplicate_note = duplicate_note = TabData.query.filter((TabData.tab_id == id) & (TabData.measure == note['measure']) & (TabData.string == note['string']) & (TabData.beat == note['beat'])).first()
             if duplicate_note:

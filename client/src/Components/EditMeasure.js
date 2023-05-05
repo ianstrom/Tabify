@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }) {
     const [string1Beat1, setString1Beat1] = useState("")
@@ -54,18 +53,19 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
 
     useEffect(() => {
         if (tabData) {
-            for (const note of tabData) {
-                if (!(note.fret) && note.fret.toString() !== "0") {
-                    return
-                } else if (isNaN(note.fret)) {
-                    setStringAndBeat(note.string, note.beat, "")
-                    setTabData((prevData) => prevData.filter((d) => !(d.string === note.string && d.beat === note.beat && d.measure === parseInt(note.measure))), { measure: parseInt(note.measure), string: note.string, beat: note.beat, fret: "" })
-                } else {
-                    setStringAndBeat(note.string, note.beat, note.fret.toString())
-                }
+          for (const note of tabData) {
+            if (note.fret === null && note.fret.toString() !== "0" && note.fret === undefined) {
+              return;
+            } else if (isNaN(note.fret)) {
+              setStringAndBeat(note.string, note.beat, "");
+              setTabData((prevData) => prevData.filter((d) => !(d.string === note.string && d.beat === note.beat && d.measure === parseInt(note.measure))));
+            } else {
+              setStringAndBeat(note.string, note.beat, note.fret.toString());
             }
+          }
         }
-    }, [tabData])
+      }, [tabData]);
+      
 
     const handleChange = (string, beat, measure) => (e) => {
         setStringAndBeat(string, beat, e.target.value);
@@ -83,10 +83,10 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
         } else if (index !== -1) {
             setTabData((prevData) => {
                 const newData = prevData.filter((d) => !(d.string === string && d.beat === beat && d.measure === parseInt(measure)));
-                newData.push({ string, beat, fret: parseInt(e.target.value), duration, measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + (beat - 1)) * (60 / bpm) / 4), project_id: project_id, }); return newData;
+                newData.push({ string, beat, fret: parseInt(e.target.value), duration: (60/bpm * duration), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1)/2)) * (60 / bpm)), project_id: project_id, }); return newData;
             });
         } else {
-            setTabData((prevData) => [...prevData, { string, beat, fret: parseInt(e.target.value), duration, measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + (beat - 1)) * (60 / bpm) / 4), project_id: project_id, },]);
+            setTabData((prevData) => [...prevData, { string, beat, fret: parseInt(e.target.value), duration: (60/bpm * duration), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1)/2)) * (60 / bpm)), project_id: project_id, },]);
         }
     };
 
@@ -97,12 +97,12 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
     }
 
     return (
-        <div className="w-64 border-2 border-gray-500 mt-5">
+        <div className="w-64 border-2 border-gray-300 rounded-md mt-5">
             <div className="grid grid-rows-6 grid-cols-8">
                 <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat1.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -111,18 +111,13 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                                 }
                             })}
                         </div>
-                        <input
-                            className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
-                            value={string1Beat1}
-                            onChange={(e) => handleChange(1, 1, measure)(e)}
-                            id={`String1Beat1Measure${measure}`}
-                        />
+                        <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string1Beat1} onChange={(e) => handleChange(1, 1, measure)(e)} id={`String1Beat1Measure${measure}`} />
                     </div>
                 </div>
                 <div className="grid grid-row-1 grid-col-2 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat2.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -142,7 +137,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-1 grid-col-3 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat3.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -162,7 +157,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-1 grid-col-4 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat4.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -182,7 +177,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-1 grid-col-5 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat5.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -202,7 +197,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-1 grid-col-6 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat6.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -222,7 +217,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-1 grid-col-7 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat7.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -242,7 +237,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-1 grid-col-8 items-center h-6 relative">
                     <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string1Beat8.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -262,7 +257,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-1 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat1.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -282,7 +277,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-2 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat2.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -302,7 +297,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-3 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat3.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -322,7 +317,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-4 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat4.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -342,7 +337,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-5 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat5.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -362,7 +357,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-6 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat6.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -382,7 +377,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-7 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat7.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -402,7 +397,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-2 grid-col-8 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string2Beat8.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -422,7 +417,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-1 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat1.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -442,7 +437,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-2 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat2.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -462,7 +457,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-3 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat3.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -482,7 +477,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-4 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat4.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -502,7 +497,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-5 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat5.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -522,7 +517,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-6 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat6.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -542,7 +537,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-7 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat7.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -562,7 +557,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-3 grid-col-8 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string3Beat8.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -582,7 +577,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-1 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat1.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -602,7 +597,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-2 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat2.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -622,7 +617,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-3 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat3.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -642,7 +637,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-4 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat4.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -662,7 +657,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-5 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat5.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -682,7 +677,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-6 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat6.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -702,7 +697,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-7 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat7.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -722,7 +717,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-4 grid-col-8 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string4Beat8.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -742,7 +737,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-1 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat1.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -762,7 +757,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-2 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat2.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -782,7 +777,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-3 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat3.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -802,7 +797,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-4 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat4.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -822,7 +817,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-5 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat5.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -842,7 +837,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-6 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat6.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -862,7 +857,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-7 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat7.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -882,7 +877,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-5 grid-col-8 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string5Beat8.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -902,7 +897,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-1 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat1.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -922,7 +917,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-2 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat2.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -942,7 +937,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-3 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat3.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -962,7 +957,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-4 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat4.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -982,7 +977,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-5 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat5.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -1002,7 +997,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-6 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat6.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -1022,7 +1017,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-7 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat7.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;
@@ -1042,7 +1037,7 @@ function EditMeasure({ bpm, measure, duration, setTabData, tabData, project_id }
                 <div className="grid grid-row-6 grid-col-8 items-center h-6 relative">
                     <div className="bg-black h-0.5"></div>
                     <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-                        <div className="bg-slate-800 relative z-10" style={{ position: 'relative', zIndex: 10 }}>
+                        <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                             {string6Beat8.split('').map((char, index) => {
                                 if (char === ' ') {
                                     return <span key={index}>&nbsp;</span>;

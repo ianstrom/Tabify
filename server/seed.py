@@ -71,88 +71,88 @@ with app.app_context():
     db.session.commit()
 
 
-    td1 = TabData(tab_id=t1.id, beat=1, string=6, fret=0, measure=1, duration="Eighth")
-    td1.time = ((td1.measure - 1) * 4 + (td1.beat - 1)) * (60 / t1.bpm) / 4
-    td2 = TabData(tab_id=t1.id, beat=1, string=5, fret=1, measure=2, duration="Eighth")
-    td2.time = ((td2.measure - 1) * 4 + (td2.beat - 1)) * (60 / t1.bpm) / 4
-    td3 = TabData(tab_id=t1.id, beat=1, string=4, fret=1, measure=2, duration="Eighth")
-    td3.time = ((td3.measure - 1) * 4 + (td3.beat - 1)) * (60 / t1.bpm) / 4
-    td4 = TabData(tab_id=t1.id, beat=1, string=3, fret=1, measure=3, duration="Eighth")
-    td4.time = ((td4.measure - 1) * 4 + (td4.beat - 1)) * (60 / t1.bpm) / 4
-    td5 = TabData(tab_id=t1.id, beat=1, string=2, fret=1, measure=3, duration="Eighth")
-    td5.time = ((td5.measure - 1) * 4 + (td5.beat - 1)) * (60 / t1.bpm) / 4
-    td6 = TabData(tab_id=t1.id, beat=1, string=1, fret=1, measure=4, duration="Eighth")
-    td6.time = ((td6.measure - 1) * 4 + (td6.beat - 1)) * (60 / t1.bpm) / 4
-    td7 = TabData(tab_id=t2.id, beat=1, string=6, fret=1, measure=1, duration="Eighth")
-    td7.time = ((td7.measure - 1) * 4 + (td7.beat - 1)) * (60 / t2.bpm) / 4
-    td8 = TabData(tab_id=t2.id, beat=1, string=5, fret=1, measure=2, duration="Eighth")
-    td8.time = ((td8.measure - 1) * 4 + (td8.beat - 1)) * (60 / t2.bpm) / 4
-    td9 = TabData(tab_id=t2.id, beat=1, string=4, fret=1, measure=2, duration="Eighth")
-    td9.time = ((td9.measure - 1) * 4 + (td9.beat - 1)) * (60 / t2.bpm) / 4
-    td10 = TabData(tab_id=t2.id, beat=1, string=3, fret=1, measure=3, duration="Eighth")
-    td10.time = ((td10.measure - 1) * 4 + (td10.beat - 1)) * (60 / t2.bpm) / 4
-    td11 = TabData(tab_id=t2.id, beat=1, string=2, fret=1, measure=3, duration="Eighth")
-    td11.time = ((td11.measure - 1) * 4 + (td11.beat - 1)) * (60 / t2.bpm) / 4
-    td12 = TabData(tab_id=t2.id, beat=1, string=1, fret=1, measure=4, duration="Eighth")
-    td12.time = ((td12.measure - 1) * 4 + (td12.beat - 1)) * (60 / t2.bpm) / 4
-    td13 = TabData(tab_id=t3.id, beat=1, string=6, fret=1, measure=1, duration="Eighth")
-    td13.time = ((td13.measure - 1) * 4 + (td13.beat - 1)) * (60 / t3.bpm) / 4
-    td14 = TabData(tab_id=t3.id, beat=1, string=5, fret=1, measure=2, duration="Eighth")
-    td14.time = ((td14.measure - 1) * 4 + (td14.beat - 1)) * (60 / t3.bpm) / 4
-    td15 = TabData(tab_id=t3.id, beat=1, string=4, fret=1, measure=2, duration="Eighth")
-    td15.time = ((td15.measure - 1) * 4 + (td15.beat - 1)) * (60 / t3.bpm) / 4
-    td16 = TabData(tab_id=t3.id, beat=1, string=3, fret=1, measure=3, duration="Eighth")
-    td16.time = ((td16.measure - 1) * 4 + (td16.beat - 1)) * (60 / t3.bpm) / 4
-    td17 = TabData(tab_id=t3.id, beat=1, string=2, fret=1, measure=3, duration="Eighth")
-    td17.time = ((td17.measure - 1) * 4 + (td17.beat - 1)) * (60 / t3.bpm) / 4
-    td18 = TabData(tab_id=t3.id, beat=1, string=1, fret=1, measure=4, duration="Eighth")
-    td18.time = ((td18.measure - 1) * 4 + (td18.beat - 1)) * (60 / t3.bpm) / 4
-    td19 = TabData(tab_id=t4.id, beat=1, string=6, fret=1, measure=1, duration="Eighth")
-    td19.time = ((td19.measure - 1) * 4 + (td19.beat - 1)) * (60 / t4.bpm) / 4
-    td20 = TabData(tab_id=t4.id, beat=1, string=5, fret=1, measure=2, duration="Eighth")
-    td20.time = ((td20.measure - 1) * 4 + (td20.beat - 1)) * (60 / t4.bpm) / 4
-    td21 = TabData(tab_id=t4.id, beat=1, string=4, fret=1, measure=2, duration="Eighth")
-    td21.time = ((td21.measure - 1) * 4 + (td21.beat - 1)) * (60 / t4.bpm) / 4
-    td22 = TabData(tab_id=t4.id, beat=1, string=3, fret=1, measure=3, duration="Eighth")
-    td22.time = ((td22.measure - 1) * 4 + (td22.beat - 1)) * (60 / t4.bpm) / 4
-    td23 = TabData(tab_id=t4.id, beat=1, string=2, fret=1, measure=3, duration="Eighth")
-    td23.time = ((td23.measure - 1) * 4 + (td23.beat - 1)) * (60 / t4.bpm) / 4
-    td24 = TabData(tab_id=t4.id, beat=1, string=1, fret=1, measure=4, duration="Eighth")
-    td24.time = ((td24.measure - 1) * 4 + (td24.beat - 1)) * (60 / t4.bpm) / 4
-    td25 = TabData(tab_id=t5.id, beat=1, string=6, fret=1, measure=1, duration="Eighth")
-    td25.time = ((td25.measure - 1) * 4 + (td25.beat - 1)) * (60 / t5.bpm) / 4
-    td26 = TabData(tab_id=t5.id, beat=1, string=5, fret=1, measure=2, duration="Eighth")
-    td26.time = ((td26.measure - 1) * 4 + (td26.beat - 1)) * (60 / t5.bpm) / 4
-    td27 = TabData(tab_id=t5.id, beat=1, string=4, fret=1, measure=2, duration="Eighth")
-    td27.time = ((td27.measure - 1) * 4 + (td27.beat - 1)) * (60 / t5.bpm) / 4
-    td28 = TabData(tab_id=t5.id, beat=1, string=3, fret=1, measure=3, duration="Eighth")
-    td28.time = ((td28.measure - 1) * 4 + (td28.beat - 1)) * (60 / t5.bpm) / 4
-    td29 = TabData(tab_id=t5.id, beat=1, string=2, fret=1, measure=3, duration="Eighth")
-    td29.time = ((td29.measure - 1) * 4 + (td29.beat - 1)) * (60 / t5.bpm) / 4
-    td30 = TabData(tab_id=t5.id, beat=1, string=1, fret=1, measure=4, duration="Eighth")
-    td30.time = ((td30.measure - 1) * 4 + (td30.beat - 1)) * (60 / t5.bpm) / 4
-    td31 = TabData(tab_id=t6.id, beat=1, string=6, fret=1, measure=1, duration="Eighth")
-    td31.time = ((td31.measure - 1) * 4 + (td31.beat - 1)) * (60 / t6.bpm) / 4
-    td32 = TabData(tab_id=t6.id, beat=1, string=5, fret=1, measure=2, duration="Eighth")
-    td32.time = ((td32.measure - 1) * 4 + (td32.beat - 1)) * (60 / t6.bpm) / 4
-    td33 = TabData(tab_id=t6.id, beat=1, string=4, fret=1, measure=2, duration="Eighth")
-    td33.time = ((td33.measure - 1) * 4 + (td33.beat - 1)) * (60 / t6.bpm) / 4
-    td34 = TabData(tab_id=t6.id, beat=1, string=3, fret=1, measure=3, duration="Eighth")
-    td34.time = ((td34.measure - 1) * 4 + (td34.beat - 1)) * (60 / t6.bpm) / 4
-    td35 = TabData(tab_id=t6.id, beat=1, string=2, fret=1, measure=3, duration="Eighth")
-    td35.time = ((td35.measure - 1) * 4 + (td35.beat - 1)) * (60 / t6.bpm) / 4
-    td36 = TabData(tab_id=t6.id, beat=1, string=1, fret=1, measure=4, duration="Eighth")
-    td36.time = ((td36.measure - 1) * 4 + (td36.beat - 1)) * (60 / t6.bpm) / 4
-    td38 = TabData(tab_id=t1.id , beat=1, string=5, fret=2, measure=1, duration="Eighth")
-    td38.time = ((td38.measure - 1) * 4 + (td38.beat - 1)) * (60 / t1.bpm) / 4
-    td39 = TabData(tab_id=t1.id , beat=1, string=4, fret=2, measure=1, duration="Eighth")
-    td39.time = ((td39.measure - 1) * 4 + (td39.beat - 1)) * (60 / t1.bpm) / 4
-    td40 = TabData(tab_id=t1.id , beat=1, string=3, fret=1, measure=1, duration="Eighth")
-    td40.time = ((td40.measure - 1) * 4 + (td40.beat - 1)) * (60 / t1.bpm) / 4
-    td41 = TabData(tab_id=t1.id , beat=1, string=2, fret=0, measure=1, duration="Eighth")
-    td41.time = ((td41.measure - 1) * 4 + (td41.beat - 1)) * (60 / t1.bpm) / 4
-    td42 = TabData(tab_id=t1.id , beat=1, string=1, fret=0, measure=1, duration="Eighth")
-    td42.time = ((td42.measure - 1) * 4 + (td42.beat - 1)) * (60 / t1.bpm) / 4
+    td1 = TabData(tab_id=t1.id, beat=1, string=6, fret=0, measure=1, duration=(60/t1.bpm * 0.5))
+    td1.time = ((td1.measure - 1) * 4 + (td1.beat - 1)/2) * (60 / t1.bpm)
+    td2 = TabData(tab_id=t1.id, beat=1, string=5, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td2.time = ((td2.measure - 1) * 4 + (td2.beat - 1)/2) * (60 / t1.bpm)
+    td3 = TabData(tab_id=t1.id, beat=1, string=4, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td3.time = ((td3.measure - 1) * 4 + (td3.beat - 1)/2) * (60 / t1.bpm)
+    td4 = TabData(tab_id=t1.id, beat=1, string=3, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td4.time = ((td4.measure - 1) * 4 + (td4.beat - 1)/2) * (60 / t1.bpm)
+    td5 = TabData(tab_id=t1.id, beat=1, string=2, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td5.time = ((td5.measure - 1) * 4 + (td5.beat - 1)/2) * (60 / t1.bpm)
+    td6 = TabData(tab_id=t1.id, beat=1, string=1, fret=1, measure=4, duration=(60/t1.bpm * 0.5))
+    td6.time = ((td6.measure - 1) * 4 + (td6.beat - 1)/2) * (60 / t1.bpm)
+    td7 = TabData(tab_id=t2.id, beat=1, string=6, fret=1, measure=1, duration=(60/t1.bpm * 0.5))
+    td7.time = ((td7.measure - 1) * 4 + (td7.beat - 1)/2) * (60 / t2.bpm)
+    td8 = TabData(tab_id=t2.id, beat=1, string=5, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td8.time = ((td8.measure - 1) * 4 + (td8.beat - 1)/2) * (60 / t2.bpm)
+    td9 = TabData(tab_id=t2.id, beat=1, string=4, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td9.time = ((td9.measure - 1) * 4 + (td9.beat - 1)/2) * (60 / t2.bpm)
+    td10 = TabData(tab_id=t2.id, beat=1, string=3, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td10.time = ((td10.measure - 1) * 4 + (td10.beat - 1)/2) * (60 / t2.bpm)
+    td11 = TabData(tab_id=t2.id, beat=1, string=2, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td11.time = ((td11.measure - 1) * 4 + (td11.beat - 1)/2) * (60 / t2.bpm)
+    td12 = TabData(tab_id=t2.id, beat=1, string=1, fret=1, measure=4, duration=(60/t1.bpm * 0.5))
+    td12.time = ((td12.measure - 1) * 4 + (td12.beat - 1)/2) * (60 / t2.bpm)
+    td13 = TabData(tab_id=t3.id, beat=1, string=6, fret=1, measure=1, duration=(60/t1.bpm * 0.5))
+    td13.time = ((td13.measure - 1) * 4 + (td13.beat - 1)/2) * (60 / t3.bpm)
+    td14 = TabData(tab_id=t3.id, beat=1, string=5, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td14.time = ((td14.measure - 1) * 4 + (td14.beat - 1)/2) * (60 / t3.bpm)
+    td15 = TabData(tab_id=t3.id, beat=1, string=4, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td15.time = ((td15.measure - 1) * 4 + (td15.beat - 1)/2) * (60 / t3.bpm)
+    td16 = TabData(tab_id=t3.id, beat=1, string=3, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td16.time = ((td16.measure - 1) * 4 + (td16.beat - 1)/2) * (60 / t3.bpm)
+    td17 = TabData(tab_id=t3.id, beat=1, string=2, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td17.time = ((td17.measure - 1) * 4 + (td17.beat - 1)/2) * (60 / t3.bpm)
+    td18 = TabData(tab_id=t3.id, beat=1, string=1, fret=1, measure=4, duration=(60/t1.bpm * 0.5))
+    td18.time = ((td18.measure - 1) * 4 + (td18.beat - 1)/2) * (60 / t3.bpm)
+    td19 = TabData(tab_id=t4.id, beat=1, string=6, fret=1, measure=1, duration=(60/t1.bpm * 0.5))
+    td19.time = ((td19.measure - 1) * 4 + (td19.beat - 1)/2) * (60 / t4.bpm)
+    td20 = TabData(tab_id=t4.id, beat=1, string=5, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td20.time = ((td20.measure - 1) * 4 + (td20.beat - 1)/2) * (60 / t4.bpm)
+    td21 = TabData(tab_id=t4.id, beat=1, string=4, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td21.time = ((td21.measure - 1) * 4 + (td21.beat - 1)/2) * (60 / t4.bpm)
+    td22 = TabData(tab_id=t4.id, beat=1, string=3, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td22.time = ((td22.measure - 1) * 4 + (td22.beat - 1)/2) * (60 / t4.bpm)
+    td23 = TabData(tab_id=t4.id, beat=1, string=2, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td23.time = ((td23.measure - 1) * 4 + (td23.beat - 1)/2) * (60 / t4.bpm)
+    td24 = TabData(tab_id=t4.id, beat=1, string=1, fret=1, measure=4, duration=(60/t1.bpm * 0.5))
+    td24.time = ((td24.measure - 1) * 4 + (td24.beat - 1)/2) * (60 / t4.bpm)
+    td25 = TabData(tab_id=t5.id, beat=1, string=6, fret=1, measure=1, duration=(60/t1.bpm * 0.5))
+    td25.time = ((td25.measure - 1) * 4 + (td25.beat - 1)/2) * (60 / t5.bpm)
+    td26 = TabData(tab_id=t5.id, beat=1, string=5, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td26.time = ((td26.measure - 1) * 4 + (td26.beat - 1)/2) * (60 / t5.bpm)
+    td27 = TabData(tab_id=t5.id, beat=1, string=4, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td27.time = ((td27.measure - 1) * 4 + (td27.beat - 1)/2) * (60 / t5.bpm)
+    td28 = TabData(tab_id=t5.id, beat=1, string=3, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td28.time = ((td28.measure - 1) * 4 + (td28.beat - 1)/2) * (60 / t5.bpm)
+    td29 = TabData(tab_id=t5.id, beat=1, string=2, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td29.time = ((td29.measure - 1) * 4 + (td29.beat - 1)/2) * (60 / t5.bpm)
+    td30 = TabData(tab_id=t5.id, beat=1, string=1, fret=1, measure=4, duration=(60/t1.bpm * 0.5))
+    td30.time = ((td30.measure - 1) * 4 + (td30.beat - 1)/2) * (60 / t5.bpm)
+    td31 = TabData(tab_id=t6.id, beat=1, string=6, fret=1, measure=1, duration=(60/t1.bpm * 0.5))
+    td31.time = ((td31.measure - 1) * 4 + (td31.beat - 1)/2) * (60 / t6.bpm)
+    td32 = TabData(tab_id=t6.id, beat=1, string=5, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td32.time = ((td32.measure - 1) * 4 + (td32.beat - 1)/2) * (60 / t6.bpm)
+    td33 = TabData(tab_id=t6.id, beat=1, string=4, fret=1, measure=2, duration=(60/t1.bpm * 0.5))
+    td33.time = ((td33.measure - 1) * 4 + (td33.beat - 1)/2) * (60 / t6.bpm)
+    td34 = TabData(tab_id=t6.id, beat=1, string=3, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td34.time = ((td34.measure - 1) * 4 + (td34.beat - 1)/2) * (60 / t6.bpm)
+    td35 = TabData(tab_id=t6.id, beat=1, string=2, fret=1, measure=3, duration=(60/t1.bpm * 0.5))
+    td35.time = ((td35.measure - 1) * 4 + (td35.beat - 1)/2) * (60 / t6.bpm)
+    td36 = TabData(tab_id=t6.id, beat=1, string=1, fret=1, measure=4, duration=(60/t1.bpm * 0.5))
+    td36.time = ((td36.measure - 1) * 4 + (td36.beat - 1)/2) * (60 / t6.bpm)
+    td38 = TabData(tab_id=t1.id , beat=1, string=5, fret=2, measure=1, duration=(60/t1.bpm * 0.5))
+    td38.time = ((td38.measure - 1) * 4 + (td38.beat - 1)/2) * (60 / t1.bpm)
+    td39 = TabData(tab_id=t1.id , beat=1, string=4, fret=2, measure=1, duration=(60/t1.bpm * 0.5))
+    td39.time = ((td39.measure - 1) * 4 + (td39.beat - 1)/2) * (60 / t1.bpm)
+    td40 = TabData(tab_id=t1.id , beat=1, string=3, fret=1, measure=1, duration=(60/t1.bpm * 0.5))
+    td40.time = ((td40.measure - 1) * 4 + (td40.beat - 1)/2) * (60 / t1.bpm)
+    td41 = TabData(tab_id=t1.id , beat=1, string=2, fret=0, measure=1, duration=(60/t1.bpm * 0.5))
+    td41.time = ((td41.measure - 1) * 4 + (td41.beat - 1)/2) * (60 / t1.bpm)
+    td42 = TabData(tab_id=t1.id , beat=1, string=1, fret=0, measure=1, duration=(60/t1.bpm * 0.5))
+    td42.time = ((td42.measure - 1) * 4 + (td42.beat - 1)/2) * (60 / t1.bpm)
 
     tdarr = [td1, td2, td3, td4, td5, td6, td7, td8, td9, td10,
             td11, td12, td13, td14, td15, td16, td17, td18, td19, td20,

@@ -6,35 +6,56 @@ import Signup from './Signup';
 import EditProject from './EditProject';
 import Project from './Project';
 import CreateNewTabForm from './CreateNewTabForm';
+import Reviews from './Reviews';
+import YourProjects from './YourProjects';
+import NavBar from './NavBar';
+import Tablature from './Tablature';
 
-function App(){
+function App() {
     const [user, setUser] = useState(null)
     const [projectToView, setProjectToView] = useState()
-
+    const [userTabs, setUserTabs] = useState([])
+    const [featuredTabs, setFeaturedTabs] = useState([])
+    
     const navigate = useNavigate()
 
     useEffect(() => {
         fetch("/check_session")
-        .then((r) => {
-            if (r.ok) {
-                r.json().then((user) => setUser(user))
-            } else {
-                navigate("/login")
-            }
-        })
+            .then((r) => {
+                if (r.ok) {
+                    r.json()
+                    .then((user) => {
+                        setFeaturedTabs(user.all_tabs)
+                        setUser(user)
+                        if (user.tabs) {
+                            setUserTabs(user.tabs)
+                        }
+                    })
+                } else {
+                    navigate("/login")
+                }
+            })
     }, [])
 
     return (
-        <div className='h-screen bg-slate-800'>
-            <Routes>
-                <Route exact path="/" element={<LandingPage setUser={setUser} setProjectToView={setProjectToView} user={user}/>} />
-                <Route path="/login" element={<Login setUser={setUser}/>} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/edit_project" element={<EditProject project={projectToView}/>} />
-                <Route path="/project" element={<Project project={projectToView}/>} />
-                <Route path="/create" element={<CreateNewTabForm user={user}/>} />
-            </Routes>
-        </div>
+        <div class="min-h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
+            <div className='absolute z-10'>
+                <NavBar user={user} projectToView={projectToView} setProjectToView={setProjectToView} />
+            </div>
+            <div>
+                <Routes>
+                    <Route exact path="/" element={<LandingPage setFeaturedTabs={setFeaturedTabs} setUserTabs={setUserTabs} featuredTabs={featuredTabs} setUser={setUser} userTabs={userTabs} setProjectToView={setProjectToView} user={user} />} />
+                    <Route path="/login" element={<Login featuredTabs={featuredTabs} setUserTabs={setUserTabs} setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
+                    <Route path="/signup" element={<Signup setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
+                    <Route path="/create" element={<CreateNewTabForm user={user} userTabs={userTabs} setProjectToView={setProjectToView} setUserTabs={setUserTabs} setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
+                    <Route path="/edit_project/:id" element={<EditProject setProjectToView={setProjectToView} project={projectToView} />} />
+                    <Route path="/your_projects" element={<YourProjects user={user} userTabs={userTabs} setProjectToView={setProjectToView} />} />
+                    <Route path="/tablature" element={<Tablature setProjectToView={setProjectToView}/>} />
+                    <Route path="/project/:id" element={<Project setProjectToView={setProjectToView} project={projectToView} />} />
+                    <Route path="/reviews/:id" element={<Reviews setProjectToView={setProjectToView} projectToView={projectToView} />} />
+                </Routes>
+            </div>
+        </div >
     )
 }
 

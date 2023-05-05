@@ -1,17 +1,29 @@
 import React, { useEffect } from "react";
 import Measure from "./Measure";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import * as Tone from "tone";
+import ConfigTuning from "./ConfigTuning";
 
-function Project({project}) {
+function Project({ project, setProjectToView }) {
     const [tabData, setTabData] = useState([])
+    const params = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`/tab_data/${project.id}`)
-        .then((r) => r.json())
-        .then((data) => {
-            setTabData(data)
-        })
+        fetch(`/tabs/${params.id}`)
+            .then(r => r.json())
+            .then(data => {
+                setProjectToView(data)
+            })
+    }, [])
+
+    useEffect(() => {
+        fetch(`/tab_data/${project?.id}`)
+            .then((r) => r.json())
+            .then((data) => {
+                setTabData(data)
+            })
     }, [project])
 
     const groupedMeasures = tabData ? tabData.reduce((r, a) => {
@@ -25,17 +37,66 @@ function Project({project}) {
 
     const measuresToDisplay = groupedMeasures ? Object.keys(groupedMeasures).map((measure) => {
         const notes = groupedMeasures[measure]
-        return <Measure tabData={notes} />
+        return <Measure key={Math.random()} tabData={notes} />
     }) : null
 
+    const handleReviews = () => {
+        navigate(`/reviews/${project?.id}`)
+    }
+
+    const handleYourProjects = () => {
+        navigate(`/your_projects`)
+        setProjectToView()
+    }
+
+    const handleHome = () => {
+        navigate(`/`)
+        setProjectToView()
+    }
+
+    const sortedTabData = (data) => {
+        return data.sort((a, b) => {
+            if (a.measure < b.measure) {
+                return -1;
+            } else if (a.measure > b.measure) {
+                return 1;
+            } else {
+                return a.beat - b.beat;
+            }
+        })
+    }
+
+    const handlePlayClick = () => {
+        const tabDataArray = sortedTabData(tabData)
+        console.log(tabDataArray)
+        const tuning = project?.tuning.split("").reduce((acc, note, i) => {
+            acc[6 - i] = ConfigTuning[`string${6 - i}`][note];
+            return acc;
+        }, {});
+        console.log(tuning)
+        const synth = new Tone.PolySynth().toDestination();
+        for (let i = 0; i < tabDataArray.length; i++) {
+            const note = tabDataArray[i]
+            const frequency = Tone.Frequency(tuning[note.string] + note.fret, "midi").toFrequency();
+            const time = note.time + Tone.now();
+            Tone.Transport.schedule((time) => {
+                synth.triggerAttackRelease(frequency, note.duration, time);
+            }, time.toString())
+        }
+        Tone.Transport.start();
+    }
+
     return (
-        <div>
-            <p className="text-4xl">{project.title}</p>
-            <p className="text-2xl">{project.artist}</p>
-            <p className="text-2xl">{project.tuning}</p>
-            <p className="text-2xl">{project.capo}</p>
-            <div className="flex flex-wrap">
+        <div className="relative ml-52">
+            <p className="text-4xl mt-8 font-bold leading-tight mb-2 sm:text-5xl md:text-6xl">{project?.title}</p>
+            <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
+            <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
+            <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
+            <div className="flex mb-52 flex-wrap mt-3">
                 {measuresToDisplay}
+            </div>
+            <div className="flex fixed bg-gray-900 bottom-0 w-screen right-0">
+                <button className="text-2xl mb-5 ml-52 border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
             </div>
         </div>
     )

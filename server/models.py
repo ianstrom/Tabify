@@ -57,7 +57,7 @@ class Review(db.Model, SerializerMixin):
 class Tab(db.Model, SerializerMixin):
     __tablename__ = 'tabs'
 
-    serialize_only = ('id', 'title', 'capo', 'tuning', 'bpm', 'artist', 'username', 'average_rating', 'user_id')
+    serialize_only = ('id', 'title', 'capo', 'tuning', 'bpm', 'artist', 'username', 'average_rating', 'user_id', 'reviews', 'visibility')
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -76,7 +76,10 @@ class Tab(db.Model, SerializerMixin):
     @property
     def average_rating(self):
         ratings = [review.rating for review in self.reviews]
-        return sum(ratings) / len(ratings)
+        if ratings:
+            return sum(ratings) / len(ratings)
+        else:
+            return 0
     
     @property
     def username(self):
