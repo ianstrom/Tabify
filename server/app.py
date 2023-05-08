@@ -64,6 +64,8 @@ class Reviews(Resource):
         data = request.get_json()
         try:
             review = Review(user_id=session.get('user_id'), tab_id=id, text=data['text'], rating=data['rating'])
+            db.session.add(review)
+            db.session.commit()
         except ValueError as e:
             return make_response(jsonify({'errors': [str(e)]}), 422)
         return make_response(jsonify(review.to_dict()), 201)
@@ -132,22 +134,15 @@ class TabDataByTabId(Resource):
         data = request.get_json()
         if not session.get('user_id') == Tab.query.filter(Tab.id == id).first().user_id:
             return make_response(jsonify({'error': "Request not allowed"}), 404)
+        db.session.query(TabData).filter(TabData.tab_id == id).delete()
+        db.session.commit()
         for note in data:
-            duplicate_note = duplicate_note = TabData.query.filter((TabData.tab_id == id) & (TabData.measure == note['measure']) & (TabData.string == note['string']) & (TabData.beat == note['beat'])).first()
-            if duplicate_note:
-                if duplicate_note.fret != note['fret'] or duplicate_note.duration != note['duration']:
-                    print(duplicate_note.to_dict())
-                    db.session.delete(duplicate_note)
-                    note = TabData(tab_id=id, fret=note['fret'], string=note['string'], beat= note['beat'], measure=note['measure'], duration=note['duration'], time=note['time'])
-                    db.session.add(note)
-                    db.session.commit()
-            else:
-                try:
-                    note = TabData(tab_id=id, fret=note['fret'], string=note['string'], beat= note['beat'], measure=note['measure'], duration=note['duration'], time=note['time'])
-                    db.session.add(note)
-                    db.session.commit()
-                except ValueError as e:
-                    return make_response(jsonify({'errors': [str(e)]}), 422)
+            try:
+                note = TabData(tab_id=id, fret=note['fret'], string=note['string'], beat= note['beat'], measure=note['measure'], duration=note['duration'], time=note['time'])
+                db.session.add(note)
+                db.session.commit()
+            except ValueError as e:
+                return make_response(jsonify({'errors': [str(e)]}), 422)
             tab_data = [t.to_dict() for t in TabData.query.filter(TabData.tab_id == id).all()]
         return make_response(jsonify(tab_data), 201)
     

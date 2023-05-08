@@ -39,7 +39,7 @@ function App() {
 
     return (
         <div class="min-h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
-            <div className='absolute z-10'>
+            <div className='absolute z-20'>
                 <NavBar user={user} projectToView={projectToView} setProjectToView={setProjectToView} />
             </div>
             <div>
@@ -52,7 +52,7 @@ function App() {
                     <Route path="/your_projects" element={<YourProjects user={user} userTabs={userTabs} setProjectToView={setProjectToView} />} />
                     <Route path="/tablature" element={<Tablature setProjectToView={setProjectToView}/>} />
                     <Route path="/project/:id" element={<Project setProjectToView={setProjectToView} project={projectToView} />} />
-                    <Route path="/reviews/:id" element={<Reviews setProjectToView={setProjectToView} projectToView={projectToView} />} />
+                    <Route path="/reviews/:id" element={<Reviews user={user} setProjectToView={setProjectToView} projectToView={projectToView} />} />
                 </Routes>
             </div>
         </div >

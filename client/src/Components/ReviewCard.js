@@ -18,7 +18,7 @@ function ReviewCard({review}) {
               </svg>
             ))}
           </div>
-          <p className="text-sm">{review.text}</p>
+          <p className="flex overflow-wrap whitespace-pre-wrap">{review.text}</p>
         </div>
       );
     }
