@@ -18,7 +18,6 @@ function App() {
     const [featuredTabs, setFeaturedTabs] = useState([])
     
     const navigate = useNavigate()
-
     useEffect(() => {
         fetch("/check_session")
             .then((r) => {
@@ -39,7 +38,7 @@ function App() {
 
     return (
         <div class="min-h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
-            <div className='absolute z-20'>
+            <div className='fixed z-20'>
                 <NavBar user={user} projectToView={projectToView} setProjectToView={setProjectToView} />
             </div>
             <div>

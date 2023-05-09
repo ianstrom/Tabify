@@ -28,7 +28,7 @@ function Reviews({ projectToView, setProjectToView, user }) {
 
 
     const reviewsToDisplay = reviews?.map((review) => {
-        return <ReviewCard key={review.id} review={review} />
+        return <ReviewCard projectToView={projectToView} key={review.id} review={review} user={user} setReviews={setReviews} reviews={reviews} />
     })
 
     const handleSubmit = (e) => {
@@ -60,18 +60,21 @@ function Reviews({ projectToView, setProjectToView, user }) {
             <div className="text-2xl flex gap-4 fixed top-8 right-10">
                 <button onClick={handleBackClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Back</button>
             </div>
-            <h1 className="text-4xl mb-4">Reviews</h1>
             <div className="w-full md:w-2/3 lg:w-1/2 xl:w-1/3">
+                <h1 className="text-4xl text-center mb-4">Reviews</h1>
                 {reviewsToDisplay}
-                <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col items-center justify-center">
-                    <div className="bg-gray-700 border border-gray-900 rounded-lg p-6 w-full">
-                        <label htmlFor="rating" className="block text-white font-bold mb-2">Rating</label>
-                        <input type="number" id="rating" name="rating" min="0" max="5" className="border border-gray-600 text-black rounded-lg py-2 px-3 w-full mb-4 text-center" value={rating} onChange={(e) => setRating(e.target.value)} />
-                        <label htmlFor="review" className="block text-white font-bold mb-2">Review</label>
-                        <textarea id="review" name="review" className="border border-gray-600 text-black rounded-lg py-2 px-3 w-full mb-4 text-center" value={review} onChange={(e) => setReview(e.target.value)} />
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Review</button>
-                    </div>
-                </form>
+                {user?.id == projectToView?.user_id ? null : (
+                    <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col items-center justify-center">
+                        <div className="bg-gray-700 border border-gray-900 rounded-lg p-6 w-full">
+                            <label htmlFor="rating" className="block text-white font-bold mb-2">Rating</label>
+                            <input type="number" id="rating" name="rating" min="0" max="5" className="border border-gray-600 text-black rounded-lg py-2 px-3 w-full mb-4 text-center" value={rating} onChange={(e) => setRating(e.target.value)} />
+                            <label htmlFor="review" className="block text-white font-bold mb-2">Review</label>
+                            <textarea id="review" name="review" className="border border-gray-600 text-black rounded-lg py-2 px-3 w-full mb-4 text-center" value={review} onChange={(e) => setReview(e.target.value)} />
+                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit Review</button>
+                        </div>
+                    </form>
+                )}
+
             </div>
         </div>
     );

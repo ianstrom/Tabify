@@ -23,7 +23,6 @@ function CreateNewTabForm({ user, setProjectToView }) {
         })
             .then((r) => r.json())
             .then((tab) => {
-                console.log(tab)
                 setProjectToView(tab)
                 navigate(`/edit_project/${tab.id}`)
             }

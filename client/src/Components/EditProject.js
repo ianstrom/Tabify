@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ConfigTuning from "./ConfigTuning";
 
 function EditProject({ project, setProjectToView }) {
-    const [measures, setMeasures] = useState([])
+    const [measures, setMeasures] = useState(["one"])
     const [duration, setDuration] = useState()
     const [tabData, setTabData] = useState([])
     const [newTabData, setNewTabData] = useState([])
@@ -21,9 +21,12 @@ function EditProject({ project, setProjectToView }) {
         user_id: project?.user_id,
         visibility: project?.visibility
     })
+    const [dataNotSaved, setDataNotSaved] = useState(false)
     const navigate = useNavigate()
     const measureCountRef = useRef(0)
     const params = useParams()
+
+    console.log(tabData, newTabData)
 
     useEffect(() => {
         fetch(`/tabs/${params.id}`)
@@ -32,9 +35,8 @@ function EditProject({ project, setProjectToView }) {
                 setProjectToView(data)
             })
     }, [])
-    console.log(newTabData)
     useEffect(() => {
-        if (newTabData.length > 0) {
+        if (newTabData?.length > 0) {
             sessionStorage.setItem("newTabData", 1)
         }
     }, [newTabData])
@@ -79,7 +81,6 @@ function EditProject({ project, setProjectToView }) {
             .then((r) => r.json())
             .then((data) => {
                 if (data.length < 1) {
-                    setMeasures([...measures, { id: measures.length + 1 }])
                     setNewTabData([...newTabData, { measure: 1, time: "", beat: 1, string: 1, fret: "", duration: "", project_id: project?.id }])
                     measureCountRef.current = 1
                 } else {
@@ -170,7 +171,11 @@ function EditProject({ project, setProjectToView }) {
     }
 
     const handleReviewClick = () => {
-        navigate(`/reviews/${project?.id}`)
+        if (sessionStorage.getItem("newTabData")) {
+            setDataNotSaved(!dataNotSaved)
+        } else {
+            navigate(`/reviews/${project?.id}`)
+        }
     }
 
     const handleEditClick = () => {
@@ -216,8 +221,28 @@ function EditProject({ project, setProjectToView }) {
         }
     }
 
+    const handleCancelClick = () => {
+        setDataNotSaved(!dataNotSaved)
+    }
+
+    const handleNavigateClick = () => {
+        sessionStorage.removeItem("newTabData")
+        navigate(`/reviews/${project?.id}`)
+    }
+
     return (
         <>
+            {dataNotSaved ? (
+                <div onClick={() => setDataNotSaved(!dataNotSaved)} className="fixed flex justify-center items-center w-screen h-screen z-50 min-h-screen bg-black bg-opacity-70">
+                <div className="md:flex h-1/8 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
+                    <p className="mb-4">You have unsaved changes.</p>
+                    <div className="gap-1 flex">
+                        <button onClick={handleCancelClick} className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-gray-800 hover:bg-gray-900 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Cancel</button>
+                        <button onClick={handleNavigateClick} className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-red-600 hover:bg-red-700 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Don't Save</button>
+                    </div>
+                </div>
+            </div>
+            ) : null}
             {edit ? (
                 <div onClick={handleEditParentClick} className="absolute flex justify-center items-center w-full h-full z-50 bg-black bg-opacity-70">
                     <form onSubmit={handleEditSubmit} className="md:flex h-1/2 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
@@ -254,23 +279,23 @@ function EditProject({ project, setProjectToView }) {
                 <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
                 <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
                 <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
-                <div className="text-2xl flex gap-4 fixed top-8 right-10">
-                    <button onClick={handleEditClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Edit</button>
-                    <button onClick={handleDeleteClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Delete</button>
-                    <button onClick={handleReviewClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
-                    <button onClick={handlePublishHideClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">{project?.visibility ? "Hide" : "Publish"}</button>
+                <div className="text-2xl z-10 flex gap-4 fixed top-8 right-10">
+                    <button onClick={handleEditClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Edit</button>
+                    <button onClick={handleDeleteClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Delete</button>
+                    <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
+                    <button onClick={handlePublishHideClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">{project?.visibility ? "Hide" : "Publish"}</button>
                 </div>
                 <div className="flex flex-wrap mb-52">
                     {measuresToDisplay}
                     {newMeasuresToDisplay}
                 </div>
-                <div className="flex gap-4 z-10 fixed bg-gray-900 bottom-0 w-screen p-5 right-0">
+                <div className="flex gap-4 z-10 fixed bottom-0 w-screen p-5 right-0">
                     <div className="flex gap-4 ml-52">
-                        <button onClick={handleClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Add Measure</button>
-                        <button onClick={handleSubmitClick} id='asdf' className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Submit data</button>
-                        <button className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+                        <button onClick={handleClick} className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Add Measure</button>
+                        <button onClick={handleSubmitClick} id='asdf' className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Submit data</button>
+                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
                         <div className="relative inline-flex">
-                            <select id="duration" defaultValue="Choose" onChange={handleSelectChange} className="appearance-none transition-colors duration-300 bg-transparent border border-white text-white px-4 py-2 pr-8 rounded-md leading-tight focus:outline-none hover:bg-white hover:bg-opacity-90 hover:text-gray-800">
+                            <select id="duration" defaultValue="Choose" onChange={handleSelectChange} className="appearance-none bg-gray-900 transition-colors duration-300 border border-white text-white px-4 py-2 pr-8 rounded-md leading-tight focus:outline-none hover:bg-white hover:bg-opacity-90 hover:text-gray-800">
                                 <option value="Choose" disabled>Choose a duration</option>
                                 <option value="0.5">Eighth</option>
                                 <option value="1">Quarter</option>

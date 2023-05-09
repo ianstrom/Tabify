@@ -40,20 +40,6 @@ function Project({ project, setProjectToView }) {
         return <Measure key={Math.random()} tabData={notes} />
     }) : null
 
-    const handleReviews = () => {
-        navigate(`/reviews/${project?.id}`)
-    }
-
-    const handleYourProjects = () => {
-        navigate(`/your_projects`)
-        setProjectToView()
-    }
-
-    const handleHome = () => {
-        navigate(`/`)
-        setProjectToView()
-    }
-
     const sortedTabData = (data) => {
         return data.sort((a, b) => {
             if (a.measure < b.measure) {
@@ -68,7 +54,6 @@ function Project({ project, setProjectToView }) {
 
     const handlePlayClick = () => {
         const tabDataArray = sortedTabData([...tabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret)))])
-        console.log(tabDataArray)
         const tuning = project?.tuning.split("").reduce((acc, note, i, arr) => {
             const nextChar = project?.tuning[i + 1]
             if (nextChar === "#") {
@@ -105,14 +90,15 @@ function Project({ project, setProjectToView }) {
             <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
             <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
             <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
+            <p className="text-lg sm:text-lg md:text-xl">Author: {project?.username}</p>
             <div className="text-2xl flex gap-4 fixed top-8 right-10">
                 <button onClick={handleReviewClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
             </div>
             <div className="flex mb-52 flex-wrap mt-3">
                 {measuresToDisplay}
             </div>
-            <div className="flex fixed bg-gray-900 bottom-0 w-screen right-0">
-                <button className="text-2xl mb-5 ml-52 border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+            <div className="flex fixed bottom-0 z-10 w-screen right-0">
+                <button className="text-2xl mb-5 ml-52 border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
             </div>
             
         </div>

@@ -13,9 +13,9 @@ function UserProjects({ user, userTabs, setProjectToView }) {
     }
 
     return (
-        <div className='h-auto mx-auto flex flex-col border rounded-md mb-10 mt-10 flex-grow'>
-            <h1 onClick={handleClick} className="text-4xl rounded-md mx-auto cursor-pointer md:text-6xl mb-4 ml-6 mt-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:text-indigo-700 hover:scale-105 ">Your Projects</h1>
-            <div className="m-2 max-w-full items-center md:m-4 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className='h-auto max-w-full mx-auto flex flex-col border rounded-md mb-10 mt-10 flex-grow'>
+            <h1 onClick={handleClick} className="text-4xl mx-auto md:text-6xl cursor-pointer mb-4 ml-6 mt-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:text-indigo-700 hover:scale-105">Your Projects</h1>
+            <div className="m-2 items-center md:m-4 max-w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {projectsToDisplay}
             </div>
         </div>
