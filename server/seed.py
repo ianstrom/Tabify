@@ -3,7 +3,6 @@ from models import db, User, Review, Tab, TabData
 
 
 with app.app_context():
-    db.session.query(Review).filter(Review.id == 11).delete()
 
 #     u1 = User(username='ian')
 #     u1.password_hash = 'test'

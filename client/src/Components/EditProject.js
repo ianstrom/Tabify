@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, createContext } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Tone from "tone";
 import { useState } from "react";
 import EditMeasure from "./EditMeasure";
 import { useParams, useNavigate } from "react-router-dom";
 import ConfigTuning from "./ConfigTuning";
 
-function EditProject({ project, setProjectToView }) {
+function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     const [measures, setMeasures] = useState(["one"])
     const [duration, setDuration] = useState()
     const [tabData, setTabData] = useState([])
@@ -22,11 +22,13 @@ function EditProject({ project, setProjectToView }) {
         visibility: project?.visibility
     })
     const [dataNotSaved, setDataNotSaved] = useState(false)
+    const [playOrPause, setPlayOrPause] = useState(false)
     const navigate = useNavigate()
     const measureCountRef = useRef(0)
     const params = useParams()
+    const [currentBeat, setCurrentBeat] = useState(1)
+    const [currentMeasure, setCurrentMeasure] = useState(1)
 
-    console.log(tabData, newTabData)
 
     useEffect(() => {
         fetch(`/tabs/${params.id}`)
@@ -56,7 +58,7 @@ function EditProject({ project, setProjectToView }) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ visibility: !project?.visibility }),
+            body: JSON.stringify({ visibility: !project?.visibility, bpm: project?.bpm }),
         })
             .then((r) => r.json())
             .then((data) => {
@@ -102,7 +104,7 @@ function EditProject({ project, setProjectToView }) {
         const notes = groupedMeasures[measure]
         const count = measure
         measureCountRef.current = parseInt(count) + 1
-        return <EditMeasure project_id={project?.id} bpm={project?.bpm} key={count} tabData={notes} setTabData={setTabData} duration={duration} measure={count} />
+        return <EditMeasure setDuration={setDuration} project_id={project?.id} bpm={project?.bpm} key={count} tabData={notes} setTabData={setTabData} duration={duration} measure={count} />
     }) : setNewTabData([...newTabData, { measure: measureCountRef.current + measures.length, beat: 1, string: 1, fret: "" }])
 
     const newGroupedMeasures = newTabData ? newTabData.reduce((r, a) => {
@@ -117,13 +119,30 @@ function EditProject({ project, setProjectToView }) {
     const newMeasuresToDisplay = newGroupedMeasures ? Object.keys(newGroupedMeasures).map((measure) => {
         const notes = newGroupedMeasures[measure]
         const count = measure
-        return <EditMeasure key={count} project_id={project?.id} bpm={project.bpm} tabData={notes} setTabData={setNewTabData} duration={duration} measure={count} />
+        return <EditMeasure setDuration={setDuration} key={count} project_id={project?.id} bpm={project.bpm} tabData={notes} setTabData={setNewTabData} duration={duration} measure={count} />
     }) : null
 
 
-    const handleSubmitClick = () => {
-        const tabDataArray = sortedTabData([...tabData.filter((data) => !(isNaN(data.fret))), ...newTabData])
-        console.log(tabDataArray)
+    // console.log(newTabData, tabData)
+    const handleSubmitClick = (updatedProject) => {
+        const tabDataArray = sortedTabData([...tabData.filter((data) => !(isNaN(data.fret)))])
+        if (newTabData) {
+            if (newTabData.length > 0) {
+                tabDataArray.push(...newTabData)
+            }
+        }
+        if (updatedProject) {
+            if (updatedProject.bpm !== project?.bpm) {
+                for (let i = 0; i < tabDataArray.length; i++) {
+                    if (tabDataArray.time !== "") {
+                        tabDataArray[i].time = ((tabDataArray[i].measure - 1) * 4 + ((tabDataArray[i].beat - 1) / 2)) * (60 / updatedProject.bpm)
+                        const duration = (tabDataArray[i].duration * project?.bpm) / 60
+                        tabDataArray[i].duration = (60 / updatedProject.bpm) * duration
+                    }
+                }
+            }
+        }
+
         fetch(`/tab_data/${project?.id}`, {
             method: "POST",
             headers: {
@@ -138,12 +157,15 @@ function EditProject({ project, setProjectToView }) {
                 sessionStorage.removeItem("newTabData")
             }
             )
-
     }
 
     const handlePlayClick = () => {
-        const tabDataArray = sortedTabData([...tabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret))), ...newTabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret)))])
-        console.log(tabDataArray)
+        let tabDataArray = sortedTabData([...tabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret)))])
+        if (newTabData) {
+            if (newTabData.length > 0) {
+                tabDataArray.push(...newTabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret))))
+            }
+        }
         const tuning = project?.tuning.split("").reduce((acc, note, i, arr) => {
             const nextChar = project?.tuning[i + 1]
             if (nextChar === "#") {
@@ -157,16 +179,21 @@ function EditProject({ project, setProjectToView }) {
         const synth = new Tone.PolySynth().toDestination();
 
         Tone.Transport.cancel()
-
         for (let i = 0; i < tabDataArray.length; i++) {
             const note = tabDataArray[i]
-            const frequency = Tone.Frequency((tuning[note.string] + note.fret + parseInt(project.capo)), "midi").toFrequency();
-            const time = note.time + Tone.now();
-            Tone.Transport.schedule((time) => {
-                synth.triggerAttackRelease(frequency, note.duration, time);
-            }, time.toString())
+            if (note) {
+                const frequency = Tone.Frequency((tuning[note.string] + note.fret + parseInt(project.capo)), "midi").toFrequency();
+                const time = note.time;
+                Tone.Transport.schedule((time) => {
+                    synth.triggerAttackRelease(frequency, note.duration, time);
+                }, time.toString())
+            }
         }
-
+        const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.cssText = ""
+        }
+        setPlayOrPause(!playOrPause)
         Tone.Transport.start()
     }
 
@@ -199,6 +226,7 @@ function EditProject({ project, setProjectToView }) {
         })
             .then((r) => r.json())
             .then((data) => {
+                handleSubmitClick(data)
                 setProjectToView(data)
                 setEdit(!edit)
             })
@@ -209,10 +237,11 @@ function EditProject({ project, setProjectToView }) {
     }
 
     const handleDelete = () => {
+        setUserTabs(userTabs.filter((tab) => tab.id !== project?.id))
         fetch(`/tabs/${project?.id}`, {
             method: "DELETE",
         })
-        .then(navigate("/"))
+            .then(navigate("/"))
     }
 
     const handleDeleteParentClick = (e) => {
@@ -230,18 +259,79 @@ function EditProject({ project, setProjectToView }) {
         navigate(`/reviews/${project?.id}`)
     }
 
+    const handleStopClick = () => {
+        // const beat = (Tone.Transport.seconds * project?.bpm) / 60
+        // const measure = Math.floor(beat / 4) + 1
+        // const beatWithin = Math.ceil(beat % 4) + 1
+        // setCurrentBeat(beatWithin)
+        // setCurrentMeasure(measure)
+        Tone.Transport.pause()
+        setPlayOrPause(!playOrPause)
+    }
+
+    const playFromBeginning = () => {
+        const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
+        console.log(elements)
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.cssText = ""
+        }
+        Tone.Transport.seconds = 0
+        if (playOrPause) {
+            Tone.Transport.stop()
+            setPlayOrPause(!playOrPause)
+        }
+        setCurrentBeat(0)
+        setCurrentMeasure(1)
+    }
+
+    useEffect(() => {
+        const eigthNoteTime = (60 / project?.bpm) / 2
+        if (playOrPause) {
+            Tone.Transport.start();
+            let beat = currentBeat
+            let measure = currentMeasure
+            Tone.Transport.scheduleRepeat((time) => {
+                if (beat !== 0) {
+                    const before = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                    before[0].style.cssText = ""
+                    before[1].style.cssText = ""
+                    before[2].style.cssText = ""
+                    before[3].style.cssText = ""
+                    before[4].style.cssText = ""
+                    before[5].style.cssText = ""
+                }
+                if (beat === 8) {
+                    beat = 1
+                    measure++
+                } else {
+                    beat++
+                }
+                const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
+                after[0].style.cssText = afterstyle
+                after[1].style.cssText = afterstyle
+                after[2].style.cssText = afterstyle
+                after[3].style.cssText = afterstyle
+                after[4].style.cssText = afterstyle
+                after[5].style.cssText = afterstyle
+                setCurrentBeat(beat)
+                setCurrentMeasure(measure)
+            }, eigthNoteTime, "0:0:0");
+        }
+    }, [playOrPause])
+
     return (
         <>
             {dataNotSaved ? (
                 <div onClick={() => setDataNotSaved(!dataNotSaved)} className="fixed flex justify-center items-center w-screen h-screen z-50 min-h-screen bg-black bg-opacity-70">
-                <div className="md:flex h-1/8 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
-                    <p className="mb-4">You have unsaved changes.</p>
-                    <div className="gap-1 flex">
-                        <button onClick={handleCancelClick} className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-gray-800 hover:bg-gray-900 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Cancel</button>
-                        <button onClick={handleNavigateClick} className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-red-600 hover:bg-red-700 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Don't Save</button>
+                    <div className="md:flex h-1/8 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
+                        <p className="mb-4">You have unsaved changes.</p>
+                        <div className="gap-1 flex">
+                            <button onClick={handleCancelClick} className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-gray-800 hover:bg-gray-900 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Cancel</button>
+                            <button onClick={handleNavigateClick} className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-red-600 hover:bg-red-700 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Don't Save</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             ) : null}
             {edit ? (
                 <div onClick={handleEditParentClick} className="absolute flex justify-center items-center w-full h-full z-50 bg-black bg-opacity-70">
@@ -292,14 +382,23 @@ function EditProject({ project, setProjectToView }) {
                 <div className="flex gap-4 z-10 fixed bottom-0 w-screen p-5 right-0">
                     <div className="flex gap-4 ml-52">
                         <button onClick={handleClick} className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Add Measure</button>
-                        <button onClick={handleSubmitClick} id='asdf' className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Submit data</button>
-                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+                        <button onClick={() => handleSubmitClick(null)} id='asdf' className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Submit data</button>
+                        {playOrPause ? (
+                            <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handleStopClick}>Pause</button>
+                        ) : (
+                            <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+                        )}
+                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={playFromBeginning}>Reset</button>
                         <div className="relative inline-flex">
-                            <select id="duration" defaultValue="Choose" onChange={handleSelectChange} className="appearance-none bg-gray-900 transition-colors duration-300 border border-white text-white px-4 py-2 pr-8 rounded-md leading-tight focus:outline-none hover:bg-white hover:bg-opacity-90 hover:text-gray-800">
+                            <select id="duration" value={duration} defaultValue="Choose" onChange={handleSelectChange} className="appearance-none bg-gray-900 transition-colors duration-300 border border-white text-white px-4 py-2 pr-8 rounded-md leading-tight focus:outline-none hover:bg-white hover:bg-opacity-90 hover:text-gray-800">
                                 <option value="Choose" disabled>Choose a duration</option>
                                 <option value="0.5">Eighth</option>
+                                <option value="0.75">Dotted Eighth</option>
                                 <option value="1">Quarter</option>
+                                <option value="1.5">Dotted Quarter</option>
                                 <option value="2">Half</option>
+                                <option value="3">Dotted Half</option>
+                                <option value="Let Ring">Let Ring</option>
                                 <option value="4">Whole</option>
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">

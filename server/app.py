@@ -151,6 +151,14 @@ class TabById(Resource):
             return make_response(jsonify({'error': "Tab not found"}), 404)
         data = request.get_json()
         try:
+            # if data['bpm']:
+                # if data['bpm'] != tab.bpm:
+                #     tab_data = TabData.query.filter(TabData.tab_id == id).all()
+                #     for note in tab_data:
+                #         note.time = ((note.measure - 1) * 4 + ((note.beat - 1) / 2)) * (60 / int(data['bpm']))
+                #         duration = int(note.duration) / (60 / int(tab.bpm))
+                #         note.duration = (60 / int(data['bpm'])) * duration
+                #         db.session.add(note)
             for attr in data:
                 setattr(tab, attr, data[attr])
             db.session.commit()

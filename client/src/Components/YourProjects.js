@@ -4,9 +4,7 @@ import ProjectCard from "./ProjectCard";
 function YourProjects({ user, userTabs, setProjectToView }) {
     const [search, setSearch] = useState("")
 
-    const filteredProjects = userTabs ? userTabs.filter((tab) => {
-        return tab.title.toLowerCase().includes(search.toLowerCase())
-    }) : null
+    const filteredProjects = userTabs ? userTabs.filter((tab) => tab.title.toLowerCase().includes(search.toLowerCase()) || tab.artist.toLowerCase().includes(search.toLowerCase())) : null
 
     const projectsToDisplay = filteredProjects ? filteredProjects.map((tab) => {
         return <ProjectCard key={tab.id} user={user} tab={tab} setProjectToView={setProjectToView} />
