@@ -179,20 +179,27 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         const synth = new Tone.PolySynth().toDestination();
 
         Tone.Transport.cancel()
+
         for (let i = 0; i < tabDataArray.length; i++) {
+
             const note = tabDataArray[i]
+
             if (note) {
+
                 const frequency = Tone.Frequency((tuning[note.string] + note.fret + parseInt(project.capo)), "midi").toFrequency();
                 const time = note.time;
                 Tone.Transport.schedule((time) => {
                     synth.triggerAttackRelease(frequency, note.duration, time);
                 }, time.toString())
+                
             }
         }
+
         const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.cssText = ""
         }
+        
         setPlayOrPause(!playOrPause)
         Tone.Transport.start()
     }
@@ -260,11 +267,6 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     const handleStopClick = () => {
-        // const beat = (Tone.Transport.seconds * project?.bpm) / 60
-        // const measure = Math.floor(beat / 4) + 1
-        // const beatWithin = Math.ceil(beat % 4) + 1
-        // setCurrentBeat(beatWithin)
-        // setCurrentMeasure(measure)
         Tone.Transport.pause()
         setPlayOrPause(!playOrPause)
     }

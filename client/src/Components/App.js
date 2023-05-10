@@ -36,6 +36,8 @@ function App() {
             })
     }, [])
 
+    console.log(projectToView)
+
     return (
         <div class="min-h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
             <div className='fixed z-20'>
@@ -48,9 +50,10 @@ function App() {
                     <Route path="/signup" element={<Signup setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
                     <Route path="/create" element={<CreateNewTabForm user={user} userTabs={userTabs} setProjectToView={setProjectToView} setUserTabs={setUserTabs} setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
                     <Route path="/edit_project/:id" element={<EditProject userTabs={userTabs} setUserTabs={setUserTabs} setProjectToView={setProjectToView} project={projectToView} />} />
+                    <Route path="/project/:id" element={<Project userTabs={userTabs} setUserTabs={setUserTabs} setProjectToView={setProjectToView} project={projectToView} />} />
                     <Route path="/your_projects" element={<YourProjects user={user} userTabs={userTabs} setProjectToView={setProjectToView} />} />
                     <Route path="/tablature" element={<Tablature setProjectToView={setProjectToView}/>} />
-                    <Route path="/project/:id" element={<Project setProjectToView={setProjectToView} project={projectToView} />} />
+                    {/* <Route path="/project/:id" element={<Project setProjectToView={setProjectToView} project={projectToView} />} /> */}
                     <Route path="/reviews/:id" element={<Reviews user={user} setProjectToView={setProjectToView} projectToView={projectToView} />} />
                 </Routes>
             </div>

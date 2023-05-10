@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
-import Measure from "./Measure";
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 import * as Tone from "tone";
+import { useState } from "react";
+import Measure from "./Measure";
+import { useParams, useNavigate } from "react-router-dom";
 import ConfigTuning from "./ConfigTuning";
 
-function Project({ project, setProjectToView }) {
+function Project({ project, setProjectToView, setUserTabs, userTabs }) {
     const [tabData, setTabData] = useState([])
-    const params = useParams()
+    const [playOrPause, setPlayOrPause] = useState(false)
     const navigate = useNavigate()
+    const params = useParams()
+    const [currentBeat, setCurrentBeat] = useState(1)
+    const [currentMeasure, setCurrentMeasure] = useState(1)
+
 
     useEffect(() => {
         fetch(`/tabs/${params.id}`)
@@ -18,11 +22,23 @@ function Project({ project, setProjectToView }) {
             })
     }, [])
 
+    const sortedTabData = (data) => {
+        return data.sort((a, b) => {
+            if (a.measure < b.measure) {
+                return -1;
+            } else if (a.measure > b.measure) {
+                return 1;
+            } else {
+                return a.beat - b.beat;
+            }
+        })
+    }
+
     useEffect(() => {
         fetch(`/tab_data/${project?.id}`)
             .then((r) => r.json())
             .then((data) => {
-                setTabData(data)
+                setTabData(sortedTabData(data))
             })
     }, [project])
 
@@ -37,23 +53,12 @@ function Project({ project, setProjectToView }) {
 
     const measuresToDisplay = groupedMeasures ? Object.keys(groupedMeasures).map((measure) => {
         const notes = groupedMeasures[measure]
-        return <Measure key={Math.random()} tabData={notes} />
+        const count = measure
+        return <Measure key={count} tabData={notes} setTabData={setTabData} measure={count} />
     }) : null
 
-    const sortedTabData = (data) => {
-        return data.sort((a, b) => {
-            if (a.measure < b.measure) {
-                return -1;
-            } else if (a.measure > b.measure) {
-                return 1;
-            } else {
-                return a.beat - b.beat;
-            }
-        })
-    }
-
     const handlePlayClick = () => {
-        const tabDataArray = sortedTabData([...tabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret)))])
+        let tabDataArray = sortedTabData([...tabData.filter((data) => "fret" in data && data.fret !== null && data.fret !== '' && !(isNaN(data.fret)))])
         const tuning = project?.tuning.split("").reduce((acc, note, i, arr) => {
             const nextChar = project?.tuning[i + 1]
             if (nextChar === "#") {
@@ -69,14 +74,26 @@ function Project({ project, setProjectToView }) {
         Tone.Transport.cancel()
 
         for (let i = 0; i < tabDataArray.length; i++) {
+
             const note = tabDataArray[i]
-            const frequency = Tone.Frequency((tuning[note.string] + note.fret + parseInt(project.capo)), "midi").toFrequency();
-            const time = note.time + Tone.now();
-            Tone.Transport.schedule((time) => {
-                synth.triggerAttackRelease(frequency, note.duration, time);
-            }, time.toString())
+
+            if (note) {
+
+                const frequency = Tone.Frequency((tuning[note.string] + note.fret + parseInt(project.capo)), "midi").toFrequency();
+                const time = note.time;
+                Tone.Transport.schedule((time) => {
+                    synth.triggerAttackRelease(frequency, note.duration, time);
+                }, time.toString())
+
+            }
         }
 
+        const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.cssText = ""
+        }
+
+        setPlayOrPause(!playOrPause)
         Tone.Transport.start()
     }
 
@@ -84,23 +101,85 @@ function Project({ project, setProjectToView }) {
         navigate(`/reviews/${project?.id}`)
     }
 
+    const handleStopClick = () => {
+        Tone.Transport.pause()
+        setPlayOrPause(!playOrPause)
+    }
+
+    const playFromBeginning = () => {
+        const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
+        console.log(elements)
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].style.cssText = ""
+        }
+        Tone.Transport.seconds = 0
+        if (playOrPause) {
+            Tone.Transport.stop()
+            setPlayOrPause(!playOrPause)
+        }
+        setCurrentBeat(0)
+        setCurrentMeasure(1)
+    }
+
+    useEffect(() => {
+        const eigthNoteTime = (60 / project?.bpm) / 2
+        if (playOrPause) {
+            Tone.Transport.start();
+            let beat = currentBeat
+            let measure = currentMeasure
+            Tone.Transport.scheduleRepeat((time) => {
+                if (beat !== 0) {
+                    const before = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                    before[0].style.cssText = ""
+                    before[1].style.cssText = ""
+                    before[2].style.cssText = ""
+                    before[3].style.cssText = ""
+                    before[4].style.cssText = ""
+                    before[5].style.cssText = ""
+                }
+                if (beat === 8) {
+                    beat = 1
+                    measure++
+                } else {
+                    beat++
+                }
+                const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
+                after[0].style.cssText = afterstyle
+                after[1].style.cssText = afterstyle
+                after[2].style.cssText = afterstyle
+                after[3].style.cssText = afterstyle
+                after[4].style.cssText = afterstyle
+                after[5].style.cssText = afterstyle
+                setCurrentBeat(beat)
+                setCurrentMeasure(measure)
+            }, eigthNoteTime, "0:0:0");
+        }
+    }, [playOrPause])
+
     return (
         <div className="relative ml-52">
-            <p className="text-4xl mt-8 font-bold leading-tight mb-2 sm:text-5xl md:text-6xl">{project?.title}</p>
+            <p className="text-4xl mt-8 max-w-4xl font-bold leading-tight mb-2 sm:text-5xl md:text-6xl">{project?.title}</p>
             <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
             <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
             <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
-            <p className="text-lg sm:text-lg md:text-xl">Author: {project?.username}</p>
-            <div className="text-2xl flex gap-4 fixed top-8 right-10">
-                <button onClick={handleReviewClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
+            <p className="text-md sm:text-lg md:text-lg">Author: {project?.username}</p>
+            <div className="text-2xl z-10 flex gap-4 fixed top-8 right-10">
+                <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
             </div>
-            <div className="flex mb-52 flex-wrap mt-3">
+            <div className="flex flex-wrap mb-52">
                 {measuresToDisplay}
             </div>
-            <div className="flex fixed bottom-0 z-10 w-screen right-0">
-                <button className="text-2xl mb-5 ml-52 border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+            <div className="flex gap-4 z-10 fixed bottom-0 w-screen p-5 right-0">
+                <div className="flex gap-4 ml-52">
+                    {playOrPause ? (
+                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handleStopClick}>Pause</button>
+                    ) : (
+                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+                    )}
+                    <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={playFromBeginning}>Reset</button>
+                </div>
             </div>
-            
         </div>
     )
 }
