@@ -84,11 +84,9 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
         } else if (index !== -1) {
             setTabData((prevData) => {
                 const newData = prevData.filter((d) => !(d.string === string && d.beat === beat && d.measure === parseInt(measure)));
-                console.log("bpm:  ", bpm, "beat:  ", beat, "Duration:  ", duration)
                 newData.push({ string, beat, fret: parseInt(e.target.value), duration: (duration === "Let Ring" ? (((60 / bpm) * 4) * ((8 - (beat - 1)) / 8)) : (60 / bpm * duration)), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1) / 2)) * (60 / bpm)), project_id: project_id, }); return newData;
             });
         } else {
-            console.log("bpm:  ", bpm, "beat:  ", beat, "Duration:  ", duration)
             setTabData((prevData) => [...prevData, { string, beat, fret: parseInt(e.target.value), duration: (duration === "Let Ring" ? (((60 / bpm) * 4) * ((8 - (beat - 1)) / 8)) : (60 / bpm * duration)), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1) / 2)) * (60 / bpm)), project_id: project_id, },]);
         }
     };

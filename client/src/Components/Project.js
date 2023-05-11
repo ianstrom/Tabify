@@ -4,21 +4,26 @@ import { useState } from "react";
 import Measure from "./Measure";
 import { useParams, useNavigate } from "react-router-dom";
 import ConfigTuning from "./ConfigTuning";
+import Loading from "./Loading";
 
-function Project({ project, setProjectToView, setUserTabs, userTabs }) {
+function Project({ project, setProjectToView }) {
     const [tabData, setTabData] = useState([])
     const [playOrPause, setPlayOrPause] = useState(false)
     const navigate = useNavigate()
     const params = useParams()
     const [currentBeat, setCurrentBeat] = useState(1)
     const [currentMeasure, setCurrentMeasure] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
+    const [maxMeasure, setMaxMeasure] = useState(0)
 
 
     useEffect(() => {
+        setIsLoading(true)
         fetch(`/tabs/${params.id}`)
             .then(r => r.json())
             .then(data => {
                 setProjectToView(data)
+                setIsLoading(false)
             })
     }, [])
 
@@ -35,10 +40,12 @@ function Project({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         fetch(`/tab_data/${project?.id}`)
             .then((r) => r.json())
             .then((data) => {
                 setTabData(sortedTabData(data))
+                setIsLoading(false)
             })
     }, [project])
 
@@ -108,7 +115,6 @@ function Project({ project, setProjectToView, setUserTabs, userTabs }) {
 
     const playFromBeginning = () => {
         const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
-        console.log(elements)
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.cssText = ""
         }
@@ -117,70 +123,80 @@ function Project({ project, setProjectToView, setUserTabs, userTabs }) {
             Tone.Transport.stop()
             setPlayOrPause(!playOrPause)
         }
-        setCurrentBeat(0)
+        setCurrentBeat(1)
         setCurrentMeasure(1)
     }
 
     useEffect(() => {
         const eigthNoteTime = (60 / project?.bpm) / 2
         if (playOrPause) {
-            Tone.Transport.start();
             let beat = currentBeat
             let measure = currentMeasure
+            console.log(beat, measure)
+            Tone.Transport.start();
             Tone.Transport.scheduleRepeat((time) => {
-                if (beat !== 0) {
-                    const before = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                const before = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                if (before.length > 0) {
                     before[0].style.cssText = ""
                     before[1].style.cssText = ""
                     before[2].style.cssText = ""
                     before[3].style.cssText = ""
                     before[4].style.cssText = ""
                     before[5].style.cssText = ""
+                    if (beat === 8) {
+                        beat = 1
+                        measure++
+                    } else {
+                        beat++
+                    }
+                    const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                    if (after.length > 0) {
+                        const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
+                        after[0].style.cssText = afterstyle
+                        after[1].style.cssText = afterstyle
+                        after[2].style.cssText = afterstyle
+                        after[3].style.cssText = afterstyle
+                        after[4].style.cssText = afterstyle
+                        after[5].style.cssText = afterstyle
+                        setCurrentBeat(beat)
+                        setCurrentMeasure(measure)
+                    } else {
+                        playFromBeginning()
+                    }
                 }
-                if (beat === 8) {
-                    beat = 1
-                    measure++
-                } else {
-                    beat++
-                }
-                const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
-                const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
-                after[0].style.cssText = afterstyle
-                after[1].style.cssText = afterstyle
-                after[2].style.cssText = afterstyle
-                after[3].style.cssText = afterstyle
-                after[4].style.cssText = afterstyle
-                after[5].style.cssText = afterstyle
-                setCurrentBeat(beat)
-                setCurrentMeasure(measure)
             }, eigthNoteTime, "0:0:0");
         }
+
     }, [playOrPause])
 
     return (
-        <div className="relative ml-52">
-            <p className="text-4xl mt-8 max-w-4xl font-bold leading-tight mb-2 sm:text-5xl md:text-6xl">{project?.title}</p>
-            <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
-            <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
-            <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
-            <p className="text-md sm:text-lg md:text-lg">Author: {project?.username}</p>
-            <div className="text-2xl z-10 flex gap-4 fixed top-8 right-10">
-                <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
-            </div>
-            <div className="flex flex-wrap mb-52">
-                {measuresToDisplay}
-            </div>
-            <div className="flex gap-4 z-10 fixed bottom-0 w-screen p-5 right-0">
-                <div className="flex gap-4 ml-52">
-                    {playOrPause ? (
-                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handleStopClick}>Pause</button>
-                    ) : (
-                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
-                    )}
-                    <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={playFromBeginning}>Reset</button>
+        <>
+            {isLoading ? <Loading /> : null}
+            <div className="relative ml-52">
+                <p className="text-4xl mt-8 max-w-4xl font-bold leading-tight mb-2 sm:text-5xl md:text-6xl">{project?.title}</p>
+                <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
+                <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
+                <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
+                <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.bpm}</p>
+                <p className="text-md sm:text-lg md:text-lg">Author: {project?.username}</p>
+                <div className="text-2xl z-10 flex gap-4 fixed top-8 right-10">
+                    <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
+                </div>
+                <div className="flex flex-wrap mb-52">
+                    {measuresToDisplay}
+                </div>
+                <div className="flex gap-4 z-10 fixed bottom-0 w-screen p-5 right-0">
+                    <div className="flex gap-4 ml-52">
+                        {playOrPause ? (
+                            <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handleStopClick}>Pause</button>
+                        ) : (
+                            <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={handlePlayClick}>Play</button>
+                        )}
+                        <button className="text-2xl border bg-gray-900 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800" onClick={playFromBeginning}>Reset</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

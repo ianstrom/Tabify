@@ -28,7 +28,7 @@ function LandingPage({ userTabs, featuredTabs, setUser, user, setProjectToView, 
     <div className={`justify-center ${userTabs.length > 0 ? "ml-52" : "w-screen"}`}>
       <div class="flex flex-col items-center justify-center px-4 md:px-8 lg:px-16">
         <h1 class="text-2xl md:text-3xl lg:text-6xl pr-52 font-bold mb-8 text-center">Tabify</h1>
-        <div class="flex pr-52 flex-col md:flex-row justify-center w-full">
+        <div class="flex pr-52 flex-col md:flex-row items-center justify-center w-full">
           {userTabs.length > 0 ? (
             <>
               <div className="w-full md:w-1/2 justify-center md:mr-2 mb-8 md:mb-0">

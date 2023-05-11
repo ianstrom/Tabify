@@ -27,7 +27,6 @@ function ReviewCard({ projectToView, review, user, reviews, setReviews }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(review)
     fetch(`/review/${review.id}`, {
       method: "PATCH",
       headers: {

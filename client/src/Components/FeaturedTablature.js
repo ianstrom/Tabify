@@ -13,12 +13,13 @@ function FeaturedTablature({ user, setProjectToView, featuredTabs }) {
     }
 
     return (
-        <div className='h-auto max-w-full mx-auto flex flex-col border rounded-md mb-10 mt-10 flex-grow'>
+        <div style={{ height: 'auto' }} className='h-full max-w-full mx-auto flex flex-col border rounded-md mb-10 mt-10 flex-grow'>
             <h1 onClick={handleClick} className="text-4xl mx-auto md:text-6xl cursor-pointer mb-4 ml-6 mt-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:text-indigo-700 hover:scale-105">Tablature</h1>
-            <div className="m-2 items-center md:m-4 max-w-full gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="m-2 flex flex-wrap justify-center items-center gap-4 md:m-4 max-w-full">
                 {featuredProjectsToDisplay}
             </div>
         </div>
+
     )
 }
 

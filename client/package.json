@@ -14,6 +14,8 @@
     "react-helmet": "^6.1.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.13.8",
+    "spinkit": "^2.0.1",
     "startaudiocontext": "^1.2.1",
     "tone": "^14.7.77",
     "web-vitals": "^2.1.4"

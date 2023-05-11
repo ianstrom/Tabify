@@ -10,15 +10,18 @@ import Reviews from './Reviews';
 import YourProjects from './YourProjects';
 import NavBar from './NavBar';
 import Tablature from './Tablature';
+import Loading from './Loading';
 
 function App() {
     const [user, setUser] = useState(null)
     const [projectToView, setProjectToView] = useState()
     const [userTabs, setUserTabs] = useState([])
     const [featuredTabs, setFeaturedTabs] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
     
     const navigate = useNavigate()
     useEffect(() => {
+        setIsLoading(true)
         fetch("/check_session")
             .then((r) => {
                 if (r.ok) {
@@ -29,20 +32,21 @@ function App() {
                         if (user.tabs) {
                             setUserTabs(user.tabs)
                         }
+                        setIsLoading(false)
                     })
                 } else {
                     navigate("/login")
+                    setIsLoading(false)
                 }
             })
     }, [])
 
-    console.log(projectToView)
-
     return (
-        <div class="min-h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
+        <div class="min-h-screen overflow-y-scroll bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
             <div className='fixed z-20'>
                 <NavBar user={user} projectToView={projectToView} setProjectToView={setProjectToView} />
             </div>
+            {isLoading ? <Loading /> : null}
             <div>
                 <Routes>
                     <Route exact path="/" element={<LandingPage setFeaturedTabs={setFeaturedTabs} setUserTabs={setUserTabs} featuredTabs={featuredTabs} setUser={setUser} userTabs={userTabs} setProjectToView={setProjectToView} user={user} />} />

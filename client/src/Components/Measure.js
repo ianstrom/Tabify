@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Measure({ tabData }) {
-    console.log(tabData)
     useEffect(() => {
         for (const note of tabData) {
             const element = document.querySelector(`#String${note.string}Beat${note.beat}Measure${note.measure}`)

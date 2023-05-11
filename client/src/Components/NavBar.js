@@ -38,6 +38,7 @@ function NavBar({ user, projectToView, setProjectToView }) {
     }
 
     const handleCancelClick = () => {
+        setIsClicked(!isClicked)
         setNavigateClicked(!navigateClicked)
     }
 

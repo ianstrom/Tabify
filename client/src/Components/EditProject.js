@@ -4,6 +4,7 @@ import { useState } from "react";
 import EditMeasure from "./EditMeasure";
 import { useParams, useNavigate } from "react-router-dom";
 import ConfigTuning from "./ConfigTuning";
+import Loading from "./Loading";
 
 function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     const [measures, setMeasures] = useState(["one"])
@@ -28,6 +29,8 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     const params = useParams()
     const [currentBeat, setCurrentBeat] = useState(1)
     const [currentMeasure, setCurrentMeasure] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
+    const [maxMeasure, setMaxMeasure] = useState(0)
 
 
     useEffect(() => {
@@ -53,6 +56,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     const handlePublishHideClick = () => {
+        isLoading(true)
         fetch(`/tabs/${project?.id}`, {
             method: "PATCH",
             headers: {
@@ -62,7 +66,9 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         })
             .then((r) => r.json())
             .then((data) => {
+
                 setProjectToView(data)
+                setIsLoading(false)
             })
     }
 
@@ -79,14 +85,17 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         fetch(`/tab_data/${project?.id}`)
             .then((r) => r.json())
             .then((data) => {
                 if (data.length < 1) {
                     setNewTabData([...newTabData, { measure: 1, time: "", beat: 1, string: 1, fret: "", duration: "", project_id: project?.id }])
                     measureCountRef.current = 1
+                    setIsLoading(false)
                 } else {
                     setTabData(sortedTabData(data))
+                    setIsLoading(false)
                 }
             })
     }, [project])
@@ -123,8 +132,8 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }) : null
 
 
-    // console.log(newTabData, tabData)
     const handleSubmitClick = (updatedProject) => {
+        setIsLoading(true)
         const tabDataArray = sortedTabData([...tabData.filter((data) => !(isNaN(data.fret)))])
         if (newTabData) {
             if (newTabData.length > 0) {
@@ -143,7 +152,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
             }
         }
 
-        fetch(`/tab_data/${project?.id}`, {
+        return fetch(`/tab_data/${project?.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -155,6 +164,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                 setTabData(sortedTabData(data))
                 setNewTabData()
                 sessionStorage.removeItem("newTabData")
+                setIsLoading(false)
             }
             )
     }
@@ -191,7 +201,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                 Tone.Transport.schedule((time) => {
                     synth.triggerAttackRelease(frequency, note.duration, time);
                 }, time.toString())
-                
+
             }
         }
 
@@ -199,7 +209,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.cssText = ""
         }
-        
+
         setPlayOrPause(!playOrPause)
         Tone.Transport.start()
     }
@@ -222,21 +232,27 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         }
     }
 
-    const handleEditSubmit = (e) => {
+    const handleEditSubmit = async (e) => {
         e.preventDefault()
-        fetch(`/tabs/${project?.id}`, {
+        setEdit(!edit)
+        setIsLoading(true)
+        const response = await fetch(`/tabs/${project?.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(formData),
         })
-            .then((r) => r.json())
-            .then((data) => {
-                handleSubmitClick(data)
-                setProjectToView(data)
-                setEdit(!edit)
-            })
+        const data = await response.json()
+        await handleSubmitClick(data)
+        setProjectToView(data)
+            // .then((r) => r.json())
+            // .then((data) => {
+            //     setEdit(!edit)
+            //     playFromBeginning()
+            //     handleSubmitClick(data)
+            //     setProjectToView(data)
+            // })
     }
 
     const handleDeleteClick = () => {
@@ -273,7 +289,6 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
 
     const playFromBeginning = () => {
         const elements = document.querySelectorAll("[class*='beat'][class*='Measure']")
-        console.log(elements)
         for (let i = 0; i < elements.length; i++) {
             elements[i].style.cssText = ""
         }
@@ -282,48 +297,54 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
             Tone.Transport.stop()
             setPlayOrPause(!playOrPause)
         }
-        setCurrentBeat(0)
+        setCurrentBeat(1)
         setCurrentMeasure(1)
     }
 
     useEffect(() => {
         const eigthNoteTime = (60 / project?.bpm) / 2
         if (playOrPause) {
-            Tone.Transport.start();
             let beat = currentBeat
             let measure = currentMeasure
+            console.log(beat, measure)
             Tone.Transport.scheduleRepeat((time) => {
-                if (beat !== 0) {
-                    const before = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                const before = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                if (before.length > 0) {
                     before[0].style.cssText = ""
                     before[1].style.cssText = ""
                     before[2].style.cssText = ""
                     before[3].style.cssText = ""
                     before[4].style.cssText = ""
                     before[5].style.cssText = ""
+                    if (beat === 8) {
+                        beat = 1
+                        measure++
+                    } else {
+                        beat++
+                    }
+                    const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
+                    if (after.length > 0) {
+                        const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
+                        after[0].style.cssText = afterstyle
+                        after[1].style.cssText = afterstyle
+                        after[2].style.cssText = afterstyle
+                        after[3].style.cssText = afterstyle
+                        after[4].style.cssText = afterstyle
+                        after[5].style.cssText = afterstyle
+                        setCurrentBeat(beat)
+                        setCurrentMeasure(measure)
+                    } else {
+                        playFromBeginning()
+                    }
                 }
-                if (beat === 8) {
-                    beat = 1
-                    measure++
-                } else {
-                    beat++
-                }
-                const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
-                const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
-                after[0].style.cssText = afterstyle
-                after[1].style.cssText = afterstyle
-                after[2].style.cssText = afterstyle
-                after[3].style.cssText = afterstyle
-                after[4].style.cssText = afterstyle
-                after[5].style.cssText = afterstyle
-                setCurrentBeat(beat)
-                setCurrentMeasure(measure)
             }, eigthNoteTime, "0:0:0");
         }
-    }, [playOrPause])
+
+    }, [playOrPause, project])
 
     return (
         <>
+            {isLoading ? <Loading /> : null}
             {dataNotSaved ? (
                 <div onClick={() => setDataNotSaved(!dataNotSaved)} className="fixed flex justify-center items-center w-screen h-screen z-50 min-h-screen bg-black bg-opacity-70">
                     <div className="md:flex h-1/8 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
@@ -336,7 +357,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                 </div>
             ) : null}
             {edit ? (
-                <div onClick={handleEditParentClick} className="absolute flex justify-center items-center w-full h-full z-50 bg-black bg-opacity-70">
+                <div onClick={handleEditParentClick} className="fixed flex justify-center items-center w-full h-full z-50 bg-black bg-opacity-70">
                     <form onSubmit={handleEditSubmit} className="md:flex h-1/2 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
                         <label className="mb-2">Song Name:</label>
                         <input onChange={(e) => setFormData({ ...formData, title: e.target.value })} value={formData.title} type="text" className="border border-gray-600 rounded-lg text-black px-2 py-1 mb-4 text-center" name="song"></input>
@@ -349,14 +370,14 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                         <label className="mb-2">BPM:</label>
                         <input onChange={(e) => setFormData({ ...formData, bpm: e.target.value })} value={formData.bpm} type="text" className="border border-gray-600 rounded-lg text-black px-2 py-1 mb-4 text-center" name="bpm"></input>
                         <div>
-                            <button className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-gray-800 hover:bg-gray-900 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Cancel</button>
+                            <button className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-gray-800 hover:bg-gray-900 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" onClick={() => setEdit(!edit)} >Cancel</button>
                             <button className="border border-gray-600 w-1/2 rounded-lg px-4 py-2 bg-gray-800 hover:bg-gray-900 hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1" type="submit" >Update</button>
                         </div>
                     </form>
                 </div>
             ) : null}
             {isDelete ? (
-                <span onClick={handleDeleteParentClick} className="absolute flex justify-center items-center w-full h-full z-50 bg-black bg-opacity-70">
+                <span onClick={handleDeleteParentClick} className="fixed flex justify-center items-center w-full h-full z-50 bg-black bg-opacity-70">
                     <div className="md:flex h-1/8 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
                         <p className="mb-4">Are you sure you want to delete this project?</p>
                         <div className="gap-1 flex">
@@ -371,13 +392,14 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                 <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
                 <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
                 <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
+                <p className="text-lg sm:text-xl md:text-2xl">BPM: {project?.bpm}</p>
                 <div className="text-2xl z-10 flex gap-4 fixed top-8 right-10">
                     <button onClick={handleEditClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Edit</button>
                     <button onClick={handleDeleteClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Delete</button>
                     <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
                     <button onClick={handlePublishHideClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">{project?.visibility ? "Hide" : "Publish"}</button>
                 </div>
-                <div className="flex flex-wrap mb-52">
+                <div className="flex flex-wrap overflow-y-scroll mb-52">
                     {measuresToDisplay}
                     {newMeasuresToDisplay}
                 </div>
