@@ -29,7 +29,7 @@ function CreateNewTabForm({ user, setProjectToView }) {
             )
     }
     return (
-        <div className="flex min-h-screen w-screen bg-gradient-to-b from-gray-800 to-gray-900 items-center justify-center text-white">
+        <div style={{background: "linear-gradient(140.6deg, #052331 55%, #004c3f 100.2%)"}} className="flex min-h-screen w-screen bg-gradient-to-b from-gray-800 to-gray-900 items-center justify-center text-white">
             <form onSubmit={handleSubmit} className="md:flex h-1/2 w-1/4 text-md flex flex-col bg-gray-700 border border-gray-900 p-6 rounded-lg justify-center text-center">
                 <label className="mb-2">Song Name:</label>
                 <input onChange={(e) => setFormData({ ...formData, title: e.target.value })} value={formData.title} type="text" className="border border-gray-600 rounded-lg text-black px-2 py-1 mb-4 text-center" name="song"></input>

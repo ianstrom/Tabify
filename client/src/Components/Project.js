@@ -25,6 +25,7 @@ function Project({ project, setProjectToView }) {
                 setProjectToView(data)
                 setIsLoading(false)
             })
+            playFromBeginning()
     }, [])
 
     const sortedTabData = (data) => {
@@ -151,7 +152,7 @@ function Project({ project, setProjectToView }) {
                     }
                     const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
                     if (after.length > 0) {
-                        const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
+                        const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 0, 0, 1), transparent, transparent); z-index: 40"
                         after[0].style.cssText = afterstyle
                         after[1].style.cssText = afterstyle
                         after[2].style.cssText = afterstyle
@@ -177,7 +178,7 @@ function Project({ project, setProjectToView }) {
                 <p className="text-lg sm:text-xl md:text-2xl">Artist: {project?.artist}</p>
                 <p className="text-lg sm:text-xl md:text-2xl">Tuning: {project?.tuning}</p>
                 <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.capo}</p>
-                <p className="text-lg sm:text-xl md:text-2xl">Capo: {project?.bpm}</p>
+                <p className="text-lg sm:text-xl md:text-2xl">BPM: {project?.bpm}</p>
                 <p className="text-md sm:text-lg md:text-lg">Author: {project?.username}</p>
                 <div className="text-2xl z-10 flex gap-4 fixed top-8 right-10">
                     <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>

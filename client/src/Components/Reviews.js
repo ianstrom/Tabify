@@ -56,7 +56,7 @@ function Reviews({ projectToView, setProjectToView, user }) {
     }
 
     return (
-        <div className="flex flex-col min-h-screen w-screen bg-gradient-to-b from-gray-800 to-gray-900 items-center justify-center text-white">
+        <div style={{background: "linear-gradient(140.6deg, #052331 55%, #004c3f 100.2%)"}} className="flex flex-col min-h-screen w-screen items-center justify-center text-white">
             <div className="text-2xl flex gap-4 fixed top-8 right-10">
                 <button onClick={handleBackClick} className="text-2xl border transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Back</button>
             </div>

@@ -42,7 +42,7 @@ function App() {
     }, [])
 
     return (
-        <div class="min-h-screen overflow-y-scroll bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-row gap-3">
+        <div style={{background: "linear-gradient(140.6deg, #052331 55%, #004c3f 100.2%)"}} class="min-h-screen overflow-y-scroll text-white flex flex-row gap-3">
             <div className='fixed z-20'>
                 <NavBar user={user} projectToView={projectToView} setProjectToView={setProjectToView} />
             </div>

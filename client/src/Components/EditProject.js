@@ -39,6 +39,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
             .then(data => {
                 setProjectToView(data)
             })
+            playFromBeginning()
     }, [])
     useEffect(() => {
         if (newTabData?.length > 0) {
@@ -56,7 +57,6 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     const handlePublishHideClick = () => {
-        isLoading(true)
         fetch(`/tabs/${project?.id}`, {
             method: "PATCH",
             headers: {
@@ -66,9 +66,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         })
             .then((r) => r.json())
             .then((data) => {
-
                 setProjectToView(data)
-                setIsLoading(false)
             })
     }
 
@@ -324,7 +322,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                     }
                     const after = document.getElementsByClassName(`beat${beat}Measure${measure}`)
                     if (after.length > 0) {
-                        const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 255, 255, 0.4), transparent, transparent); z-index: 40"
+                        const afterstyle = "background-image: linear-gradient(to right, transparent, transparent, rgba(255, 0, 0, 1), transparent, transparent); z-index: 40"
                         after[0].style.cssText = afterstyle
                         after[1].style.cssText = afterstyle
                         after[2].style.cssText = afterstyle
