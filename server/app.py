@@ -4,6 +4,7 @@ from flask_restful import Resource
 from models import db, User, Review, Tab, TabData
 from sqlalchemy import and_
 from config import app, api, db
+import os
 
 app.secret_key = b'kyushikiscool'
 
@@ -204,6 +205,6 @@ class TabDataByTabId(Resource):
 
 
 api.add_resource(TabDataByTabId, '/tab_data/<int:id>')
-
+print(os.environ.get('DATABASE_URI'))
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
