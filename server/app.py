@@ -1,5 +1,5 @@
 # initialize a flask restful app
-from flask import request, session, jsonify, make_response
+from flask import request, session, jsonify, make_response, render_template
 from flask_restful import Resource
 from models import db, User, Review, Tab, TabData
 from sqlalchemy import and_
@@ -8,6 +8,12 @@ import os
 
 app.secret_key = b'kyushikiscool'
 
+
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template('index.html')
 
 class CheckSession(Resource):
     def get(self):
