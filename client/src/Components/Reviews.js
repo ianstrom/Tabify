@@ -11,7 +11,7 @@ function Reviews({ projectToView, setProjectToView, user }) {
     const params = useParams()
 
     useEffect(() => {
-        fetch(`/tabs/${params.id}`)
+        fetch(`https://tabify.onrender.com/tabs/${params.id}`)
             .then((r) => r.json())
             .then((project) => {
                 setProjectToView(project)
@@ -19,7 +19,7 @@ function Reviews({ projectToView, setProjectToView, user }) {
     }, [])
 
     useEffect(() => {
-        fetch(`/reviews/${params.id}`)
+        fetch(`https://tabify.onrender.com/reviews/${params.id}`)
             .then((r) => r.json())
             .then((data) => {
                 setReviews(data)
@@ -33,7 +33,7 @@ function Reviews({ projectToView, setProjectToView, user }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch(`/reviews/${projectToView?.id}`, {
+        fetch(`https://tabify.onrender.com/reviews/${projectToView?.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

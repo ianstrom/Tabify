@@ -10,7 +10,7 @@ function Login({ setUser }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch("/login", {
+        fetch("https://tabify.onrender.com/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

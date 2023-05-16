@@ -34,7 +34,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
 
 
     useEffect(() => {
-        fetch(`/tabs/${params.id}`)
+        fetch(`https://tabify.onrender.com/tabs/${params.id}`)
             .then(r => r.json())
             .then(data => {
                 setProjectToView(data)
@@ -57,7 +57,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     const handlePublishHideClick = () => {
-        fetch(`/tabs/${project?.id}`, {
+        fetch(`https://tabify.onrender.com/tabs/${project?.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -84,7 +84,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`/tab_data/${project?.id}`)
+        fetch(`https://tabify.onrender.com/tab_data/${project?.id}`)
             .then((r) => r.json())
             .then((data) => {
                 if (data.length < 1) {
@@ -150,7 +150,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
             }
         }
 
-        return fetch(`/tab_data/${project?.id}`, {
+        return fetch(`https://tabify.onrender.com/tab_data/${project?.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -234,7 +234,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         e.preventDefault()
         setEdit(!edit)
         setIsLoading(true)
-        const response = await fetch(`/tabs/${project?.id}`, {
+        const response = await fetch(`https://tabify.onrender.com/tabs/${project?.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -259,7 +259,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
 
     const handleDelete = () => {
         setUserTabs(userTabs.filter((tab) => tab.id !== project?.id))
-        fetch(`/tabs/${project?.id}`, {
+        fetch(`https://tabify.onrender.com/tabs/${project?.id}`, {
             method: "DELETE",
         })
             .then(navigate("/"))

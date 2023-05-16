@@ -16,7 +16,7 @@ function CreateNewTabForm({ user, setProjectToView }) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetch("/tabs", {
+        fetch("https://tabify.onrender.com/tabs", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)

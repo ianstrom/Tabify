@@ -8,7 +8,7 @@ function Signup({ setUser, setFeaturedTabs }) {
 
     const handleSignup = (e) => {
         e.preventDefault()
-        fetch("/signup", {
+        fetch("https://tabify.onrender.com/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

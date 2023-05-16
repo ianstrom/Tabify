@@ -27,7 +27,7 @@ function ReviewCard({ projectToView, review, user, reviews, setReviews }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch(`/review/${review.id}`, {
+    fetch(`https://tabify.onrender.com/review/${review.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ function ReviewCard({ projectToView, review, user, reviews, setReviews }) {
 
   const handleDelete = () => {
     setReviews(reviews.filter((theone) => theone.id !== review.id))
-    fetch(`/review/${review.id}`, {
+    fetch(`https://tabify.onrender.com/review/${review.id}`, {
       method: "DELETE",
     })
     setIsDelete(!isDelete)

@@ -19,7 +19,7 @@ function Project({ project, setProjectToView }) {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`/tabs/${params.id}`)
+        fetch(`https://tabify.onrender.com/tabs/${params.id}`)
             .then(r => r.json())
             .then(data => {
                 setProjectToView(data)
@@ -42,7 +42,7 @@ function Project({ project, setProjectToView }) {
 
     useEffect(() => {
         setIsLoading(true)
-        fetch(`/tab_data/${project?.id}`)
+        fetch(`https://tabify.onrender.com/tab_data/${project?.id}`)
             .then((r) => r.json())
             .then((data) => {
                 setTabData(sortedTabData(data))
