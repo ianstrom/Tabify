@@ -8,7 +8,7 @@ function Tablature({ setProjectToView, user }) {
     const [search, setSearch] = useState("")
 
     useEffect(() => {
-        fetch("https://tabify.onrender.com/tabs")
+        fetch("/tabs")
             .then((r) => r.json())
             .then((tabs) => {
                 setTabs(tabs)

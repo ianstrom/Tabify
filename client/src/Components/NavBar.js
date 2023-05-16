@@ -9,7 +9,7 @@ function NavBar({ user, projectToView, setProjectToView }) {
     const navigate = useNavigate()
 
     const handleLogOut = () => {
-        fetch("https://tabify.onrender.com/logout", {
+        fetch("/logout", {
             method: "POST",
         })
             .then(window.location.reload())

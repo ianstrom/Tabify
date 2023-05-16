@@ -8,6 +8,11 @@ import os
 
 app.secret_key = b'kyushikiscool'
 
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template('index.html')
 class CheckSession(Resource):
     def get(self):
         if not session.get('user_id'):
@@ -204,6 +209,5 @@ class TabDataByTabId(Resource):
 
 
 api.add_resource(TabDataByTabId, '/tab_data/<int:id>')
-print(os.environ.get('DATABASE_URI'))
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

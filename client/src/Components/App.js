@@ -22,7 +22,7 @@ function App() {
     const navigate = useNavigate()
     useEffect(() => {
         setIsLoading(true)
-        fetch("https://tabify.onrender.com/check_session")
+        fetch("/check_session")
             .then((r) => {
                 if (r.ok) {
                     r.json()

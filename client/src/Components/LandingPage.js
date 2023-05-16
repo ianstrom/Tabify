@@ -8,7 +8,7 @@ function LandingPage({ userTabs, featuredTabs, setUser, user, setProjectToView, 
   const navigate = useNavigate()
   
   useEffect(() => {
-    fetch("https://tabify.onrender.com/check_session")
+    fetch("/check_session")
       .then((r) => {
         if (r.ok) {
           r.json().then((user) => {
