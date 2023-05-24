@@ -129,7 +129,7 @@ function Project({ project, setProjectToView }) {
     }
 
     useEffect(() => {
-        const eigthNoteTime = (60 / project?.bpm) / 2
+        const eigthNoteTime = (60 / project?.bpm) / 4
         if (playOrPause) {
             let beat = currentBeat
             let measure = currentMeasure
@@ -144,7 +144,7 @@ function Project({ project, setProjectToView }) {
                     before[3].style.cssText = ""
                     before[4].style.cssText = ""
                     before[5].style.cssText = ""
-                    if (beat === 8) {
+                    if (beat === 16) {
                         beat = 1
                         measure++
                     } else {

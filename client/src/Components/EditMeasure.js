@@ -164,12 +164,15 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                         <div className="relative inline-flex">
                             <select id="duration" defaultValue="Choose" onChange={handleSelectChange} className="appearance-none bg-gray-900 transition-colors duration-300 border border-white text-white px-4 py-2 pr-8 rounded-md leading-tight focus:outline-none hover:bg-white hover:bg-opacity-90 hover:text-gray-800">
                                 <option value="Choose" disabled>Choose a duration</option>
+                                <option value ="0.25">Sixteenth</option>
+                                <option value="0.375">Dotted Sixteenth</option>
                                 <option value="0.5">Eighth</option>
                                 <option value="0.75">Dotted Eighth</option>
                                 <option value="1">Quarter</option>
                                 <option value="1.5">Dotted Quarter</option>
                                 <option value="2">Half</option>
                                 <option value="3">Dotted Half</option>
+                                <option value="Let Ring">Let Ring</option>
                                 <option value="4">Whole</option>
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">

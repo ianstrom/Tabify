@@ -2,7 +2,7 @@
 from flask import request, session, jsonify, make_response, render_template
 from flask_restful import Resource
 from models import db, User, Review, Tab, TabData
-from sqlalchemy import and_
+from sqlalchemy import or_
 from config import app, api, db
 import os
 
@@ -42,7 +42,7 @@ api.add_resource(Logout, '/logout')
 class Login(Resource):
     def post(self):
         data = request.get_json()
-        user = User.query.filter(User.username == data['username']).first()
+        user = User.query.filter(or_(User.username == data['username'], User.email == data['username'])).first()
         if not user:
             return make_response(jsonify({'error': "User not found"}), 401)
         if user.authenticate(data['password']):
@@ -59,7 +59,8 @@ class Signup(Resource):
         user = User.query.filter(User.username == data.get('username')).first()
         if user:
             return make_response(jsonify({'error': "Username already taken"}), 409)
-        user = User(username=data['username'])
+        max_id = db.session.query(db.func.max(User.id)).scalar()
+        user = User(id=max_id+1,username=data['username'], email=data['email'], phone_number=data['phone_number'])
         user.password_hash = data['password']
         db.session.add(user)
         db.session.commit()
@@ -79,7 +80,8 @@ class Reviews(Resource):
     def post(self, id):
         data = request.get_json()
         try:
-            review = Review(user_id=session.get('user_id'),
+            max_id = db.session.query(db.func.max(Review.id)).scalar()
+            review = Review(id=max_id+1,user_id=session.get('user_id'),
                             tab_id=id, text=data['text'], rating=data['rating'])
             db.session.add(review)
             db.session.commit()
@@ -129,7 +131,8 @@ class Tabs(Resource):
     def post(self):
         data = request.get_json()
         try:
-            tab = Tab(user_id=session.get('user_id'), title=data['title'], artist=data['artist'], bpm=int(
+            max_id = db.session.query(db.func.max(Tab.id)).scalar()
+            tab = Tab(id=max_id+1, user_id=session.get('user_id'), title=data['title'], artist=data['artist'], bpm=int(
                 data['bpm']),  capo=int(data['capo']), tuning=data['tuning'])
             db.session.add(tab)
             db.session.commit()
@@ -197,7 +200,12 @@ class TabDataByTabId(Resource):
         db.session.query(TabData).filter(TabData.tab_id == id).delete()
         db.session.commit()
         try:
-            tab_data = [TabData(tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'], measure=note['measure'], duration=note['duration'], time=note['time']) for note in data]
+            max_id = db.session.query(db.func.max(TabData.id)).scalar()
+            tab_data = []
+            for note in data:
+                tab_data.append(TabData(id= max_id+1, tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'], measure=note['measure'], duration=note['duration'], time=note['time']))
+                max_id += 1
+            # tab_data = [TabData(id= max_id+1, tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'], measure=note['measure'], duration=note['duration'], time=note['time']) for note in data]
             # note = TabData(tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'], measure=note['measure'], duration=note['duration'], time=note['time'])
             db.session.add_all(tab_data)
             db.session.commit()
