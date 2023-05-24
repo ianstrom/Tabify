@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ConfigTuning from "./ConfigTuning";
 import Loading from "./Loading";
 
-function EditProject({ project, setProjectToView, setUserTabs, userTabs, setUser, setFeaturedTabs }) {
+function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     const [measures, setMeasures] = useState(["one"])
     const [duration, setDuration] = useState()
     const [tabData, setTabData] = useState([])
@@ -32,26 +32,6 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs, setUser
     const [isLoading, setIsLoading] = useState(false)
     const [maxMeasure, setMaxMeasure] = useState(0)
 
-    useEffect(() => {
-        setIsLoading(true)
-        fetch("/check_session")
-            .then((r) => {
-                if (r.ok) {
-                    r.json()
-                    .then((user) => {
-                        setFeaturedTabs(user.all_tabs)
-                        setUser(user)
-                        if (user.tabs) {
-                            setUserTabs(user.tabs)
-                        }
-                        setIsLoading(false)
-                    })
-                } else {
-                    navigate("/login")
-                    setIsLoading(false)
-                }
-            })
-    }, [])
 
     useEffect(() => {
         fetch(`/tabs/${params.id}`)

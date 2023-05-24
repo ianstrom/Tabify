@@ -53,7 +53,7 @@ function App() {
                     <Route path="/login" element={<Login featuredTabs={featuredTabs} setUserTabs={setUserTabs} setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
                     <Route path="/signup" element={<Signup setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
                     <Route path="/create" element={<CreateNewTabForm user={user} userTabs={userTabs} setProjectToView={setProjectToView} setUserTabs={setUserTabs} setFeaturedTabs={setFeaturedTabs} setUser={setUser} />} />
-                    <Route path="/edit_project/:id" element={<EditProject setFeaturedTabs={setFeaturedTabs} setUser={setUser} userTabs={userTabs} setUserTabs={setUserTabs} setProjectToView={setProjectToView} project={projectToView} />} />
+                    <Route path="/edit_project/:id" element={<EditProject userTabs={userTabs} setUserTabs={setUserTabs} setProjectToView={setProjectToView} project={projectToView} />} />
                     <Route path="/project/:id" element={<Project userTabs={userTabs} setUserTabs={setUserTabs} setProjectToView={setProjectToView} project={projectToView} />} />
                     <Route path="/your_projects" element={<YourProjects user={user} userTabs={userTabs} setProjectToView={setProjectToView} />} />
                     <Route path="/tablature" element={<Tablature setProjectToView={setProjectToView}/>} />
