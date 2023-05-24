@@ -13,6 +13,7 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False, unique=True)
+    email = db.Column(db.String)
     _password_hash = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -92,7 +93,7 @@ class TabData(db.Model, SerializerMixin):
 
     serialize_only = ('id', 'string', 'fret', 'time', 'measure', 'duration', 'beat')
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tab_id = db.Column(db.Integer, db.ForeignKey('tabs.id'), nullable=False)
     beat = db.Column(db.Integer)
     string = db.Column(db.Integer)

@@ -4,6 +4,11 @@ import os
 
 
 with app.app_context():
-    user = db.session.query(User).first()
-    print(user)
-    print(os.environ.get('DATABASE_URI'))
+    tabs = TabData.query.order_by(TabData.tab_id, TabData.measure, TabData.beat).all()
+    new_tabs = []
+    for i, tab in enumerate(tabs):
+        tab.id = i + 1
+        new_tabs.append(tab)
+    sorted_tabs = sorted(new_tabs, key=lambda x: (x.id, x.measure, x.beat))
+    db.session.add_all(sorted_tabs)
+    db.session.commit()

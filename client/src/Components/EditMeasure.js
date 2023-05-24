@@ -10,6 +10,14 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
     const [string1Beat6, setString1Beat6] = useState("")
     const [string1Beat7, setString1Beat7] = useState("")
     const [string1Beat8, setString1Beat8] = useState("")
+    const [string1Beat9, setString1Beat9] = useState("")
+    const [string1Beat10, setString1Beat10] = useState("")
+    const [string1Beat11, setString1Beat11] = useState("")
+    const [string1Beat12, setString1Beat12] = useState("")
+    const [string1Beat13, setString1Beat13] = useState("")
+    const [string1Beat14, setString1Beat14] = useState("")
+    const [string1Beat15, setString1Beat15] = useState("")
+    const [string1Beat16, setString1Beat16] = useState("")
     const [string2Beat1, setString2Beat1] = useState("")
     const [string2Beat2, setString2Beat2] = useState("")
     const [string2Beat3, setString2Beat3] = useState("")
@@ -18,6 +26,14 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
     const [string2Beat6, setString2Beat6] = useState("")
     const [string2Beat7, setString2Beat7] = useState("")
     const [string2Beat8, setString2Beat8] = useState("")
+    const [string2Beat9, setString2Beat9] = useState("")
+    const [string2Beat10, setString2Beat10] = useState("")
+    const [string2Beat11, setString2Beat11] = useState("")
+    const [string2Beat12, setString2Beat12] = useState("")
+    const [string2Beat13, setString2Beat13] = useState("")
+    const [string2Beat14, setString2Beat14] = useState("")
+    const [string2Beat15, setString2Beat15] = useState("")
+    const [string2Beat16, setString2Beat16] = useState("")
     const [string3Beat1, setString3Beat1] = useState("")
     const [string3Beat2, setString3Beat2] = useState("")
     const [string3Beat3, setString3Beat3] = useState("")
@@ -26,6 +42,14 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
     const [string3Beat6, setString3Beat6] = useState("")
     const [string3Beat7, setString3Beat7] = useState("")
     const [string3Beat8, setString3Beat8] = useState("")
+    const [string3Beat9, setString3Beat9] = useState("")
+    const [string3Beat10, setString3Beat10] = useState("")
+    const [string3Beat11, setString3Beat11] = useState("")
+    const [string3Beat12, setString3Beat12] = useState("")
+    const [string3Beat13, setString3Beat13] = useState("")
+    const [string3Beat14, setString3Beat14] = useState("")
+    const [string3Beat15, setString3Beat15] = useState("")
+    const [string3Beat16, setString3Beat16] = useState("")
     const [string4Beat1, setString4Beat1] = useState("")
     const [string4Beat2, setString4Beat2] = useState("")
     const [string4Beat3, setString4Beat3] = useState("")
@@ -34,6 +58,14 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
     const [string4Beat6, setString4Beat6] = useState("")
     const [string4Beat7, setString4Beat7] = useState("")
     const [string4Beat8, setString4Beat8] = useState("")
+    const [string4Beat9, setString4Beat9] = useState("")
+    const [string4Beat10, setString4Beat10] = useState("")
+    const [string4Beat11, setString4Beat11] = useState("")
+    const [string4Beat12, setString4Beat12] = useState("")
+    const [string4Beat13, setString4Beat13] = useState("")
+    const [string4Beat14, setString4Beat14] = useState("")
+    const [string4Beat15, setString4Beat15] = useState("")
+    const [string4Beat16, setString4Beat16] = useState("")
     const [string5Beat1, setString5Beat1] = useState("")
     const [string5Beat2, setString5Beat2] = useState("")
     const [string5Beat3, setString5Beat3] = useState("")
@@ -42,6 +74,14 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
     const [string5Beat6, setString5Beat6] = useState("")
     const [string5Beat7, setString5Beat7] = useState("")
     const [string5Beat8, setString5Beat8] = useState("")
+    const [string5Beat9, setString5Beat9] = useState("")
+    const [string5Beat10, setString5Beat10] = useState("")
+    const [string5Beat11, setString5Beat11] = useState("")
+    const [string5Beat12, setString5Beat12] = useState("")
+    const [string5Beat13, setString5Beat13] = useState("")
+    const [string5Beat14, setString5Beat14] = useState("")
+    const [string5Beat15, setString5Beat15] = useState("")
+    const [string5Beat16, setString5Beat16] = useState("")
     const [string6Beat1, setString6Beat1] = useState("")
     const [string6Beat2, setString6Beat2] = useState("")
     const [string6Beat3, setString6Beat3] = useState("")
@@ -50,6 +90,14 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
     const [string6Beat6, setString6Beat6] = useState("")
     const [string6Beat7, setString6Beat7] = useState("")
     const [string6Beat8, setString6Beat8] = useState("")
+    const [string6Beat9, setString6Beat9] = useState("")
+    const [string6Beat10, setString6Beat10] = useState("")
+    const [string6Beat11, setString6Beat11] = useState("")
+    const [string6Beat12, setString6Beat12] = useState("")
+    const [string6Beat13, setString6Beat13] = useState("")
+    const [string6Beat14, setString6Beat14] = useState("")
+    const [string6Beat15, setString6Beat15] = useState("")
+    const [string6Beat16, setString6Beat16] = useState("")
     const [durationNotSet, setDurationNotSet] = useState(false)
 
     useEffect(() => {
@@ -84,10 +132,10 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
         } else if (index !== -1) {
             setTabData((prevData) => {
                 const newData = prevData.filter((d) => !(d.string === string && d.beat === beat && d.measure === parseInt(measure)));
-                newData.push({ string, beat, fret: parseInt(e.target.value), duration: (duration === "Let Ring" ? (((60 / bpm) * 4) * ((8 - (beat - 1)) / 8)) : (60 / bpm * duration)), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1) / 2)) * (60 / bpm)), project_id: project_id, }); return newData;
+                newData.push({ string, beat, fret: parseInt(e.target.value), duration: (duration === "Let Ring" ? (((60 / bpm) * 4) * ((16 - (beat - 1)) / 16)) : (60 / bpm * duration)), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1) / 4)) * (60 / bpm)), project_id: project_id, }); return newData;
             });
         } else {
-            setTabData((prevData) => [...prevData, { string, beat, fret: parseInt(e.target.value), duration: (duration === "Let Ring" ? (((60 / bpm) * 4) * ((8 - (beat - 1)) / 8)) : (60 / bpm * duration)), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1) / 2)) * (60 / bpm)), project_id: project_id, },]);
+            setTabData((prevData) => [...prevData, { string, beat, fret: parseInt(e.target.value), duration: (duration === "Let Ring" ? (((60 / bpm) * 4) * ((16 - (beat - 1)) / 16)) : (60 / bpm * duration)), measure: parseInt(measure), time: (((parseInt(measure) - 1) * 4 + ((beat - 1) / 4)) * (60 / bpm)), project_id: project_id, },]);
         }
     };
 
@@ -133,8 +181,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                     </div>
                 </div>
             ) : null}
-            <div onClick={handleMeasureClick} className="w-64 border-2 bg-inherit border-gray-300 rounded-md mt-5">
-                <div className="grid grid-rows-6 bg-inherit grid-cols-8">
+            <div onClick={handleMeasureClick} className="w-96 border-2 bg-inherit border-gray-300 rounded-md mt-5">
+                <div className="grid grid-rows-6 bg-inherit" style={{display: "grid", gridTemplateColumns: 'repeat(16, minmax(0, 1fr))'}}>
                     <div id={`beat1Measure${measure}`} className="grid grid-row-1 bg-inherit grid-col-1 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 bg-inherit left-0 w-full h-full flex items-center justify-center">
@@ -151,7 +199,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string1Beat1} onChange={(e) => handleChange(1, 1, measure)(e)} id={`String1Beat1Measure${measure}`} />
                         </div>
                     </div>
-                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-2 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat2Measure" + `${measure}`}`}></div>
@@ -172,7 +220,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-3 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat3Measure" + `${measure}`}`}></div>
@@ -193,7 +241,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-4 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat4Measure" + `${measure}`}`}></div>
@@ -214,7 +262,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-5 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat5Measure" + `${measure}`}`}></div>
@@ -235,7 +283,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-6 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat6Measure" + `${measure}`}`}></div>
@@ -256,7 +304,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-7 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat7Measure" + `${measure}`}`}></div>
@@ -277,7 +325,7 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-1 items-center h-6 relative">
+                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-8 items-center h-6 relative">
                         <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat8Measure" + `${measure}`}`}></div>
@@ -298,9 +346,177 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat9Measure${measure}`} className="grid grid-row-1 grid-col-9 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat9Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat9.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat9}
+                                onChange={(e) => handleChange(1, 9, measure)(e)}
+                                id={`String1Beat9Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat10Measure${measure}`} className="grid grid-row-1 grid-col-10 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat10Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat10.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat10}
+                                onChange={(e) => handleChange(1, 10, measure)(e)}
+                                id={`String1Beat10Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat11Measure${measure}`} className="grid grid-row-1 grid-col-11 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat11Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat11.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat11}
+                                onChange={(e) => handleChange(1, 11, measure)(e)}
+                                id={`String1Beat11Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat12Measure${measure}`} className="grid grid-row-1 grid-col-12 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat12Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat12.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat12}
+                                onChange={(e) => handleChange(1, 12, measure)(e)}
+                                id={`String1Beat12Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat13Measure${measure}`} className="grid grid-row-1 grid-col-13 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat13Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat13.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat13}
+                                onChange={(e) => handleChange(1, 13, measure)(e)}
+                                id={`String1Beat13Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat14Measure${measure}`} className="grid grid-row-1 grid-col-14 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat14Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat14.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat14}
+                                onChange={(e) => handleChange(1, 14, measure)(e)}
+                                id={`String1Beat14Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat15Measure${measure}`} className="grid grid-row-1 grid-col-15 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat15Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat15.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat15}
+                                onChange={(e) => handleChange(1, 15, measure)(e)}
+                                id={`String1Beat15Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat16Measure${measure}`} className="grid grid-row-1 grid-col-16 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat16Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string1Beat16.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string1Beat16}
+                                onChange={(e) => handleChange(1, 16, measure)(e)}
+                                id={`String1Beat16Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat1Measure${measure}`} className="grid grid-row-1 bg-inherit grid-col-1 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 bg-inherit left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat1Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                                 {string2Beat1.split('').map((char, index) => {
@@ -311,16 +527,11 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                     }
                                 })}
                             </div>
-                            <input
-                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
-                                value={string2Beat1}
-                                onChange={(e) => handleChange(2, 1, measure)(e)}
-                                id={`String2Beat1Measure${measure}`}
-                            />
+                            <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string2Beat1} onChange={(e) => handleChange(2, 1, measure)(e)} id={`String2Beat1Measure${measure}`} />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-2 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat2Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -340,8 +551,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-3 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat3Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -361,8 +572,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-4 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat4Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -382,8 +593,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-5 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat5Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -403,8 +614,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-6 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat6Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -424,8 +635,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-7 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat7Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -445,8 +656,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-8 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat8Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -466,9 +677,177 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat9Measure${measure}`} className="grid grid-row-1 grid-col-9 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat9Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat9.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat9}
+                                onChange={(e) => handleChange(2, 9, measure)(e)}
+                                id={`String2Beat9Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat10Measure${measure}`} className="grid grid-row-1 grid-col-10 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat10Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat10.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat10}
+                                onChange={(e) => handleChange(2, 10, measure)(e)}
+                                id={`String2Beat10Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat11Measure${measure}`} className="grid grid-row-1 grid-col-11 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat11Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat11.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat11}
+                                onChange={(e) => handleChange(2, 11, measure)(e)}
+                                id={`String2Beat11Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat12Measure${measure}`} className="grid grid-row-1 grid-col-12 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat12Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat12.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat12}
+                                onChange={(e) => handleChange(2, 12, measure)(e)}
+                                id={`String2Beat12Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat13Measure${measure}`} className="grid grid-row-1 grid-col-13 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat13Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat13.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat13}
+                                onChange={(e) => handleChange(2, 13, measure)(e)}
+                                id={`String2Beat13Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat14Measure${measure}`} className="grid grid-row-1 grid-col-14 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat14Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat14.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat14}
+                                onChange={(e) => handleChange(2, 14, measure)(e)}
+                                id={`String2Beat14Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat15Measure${measure}`} className="grid grid-row-1 grid-col-15 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat15Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat15.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat15}
+                                onChange={(e) => handleChange(2, 15, measure)(e)}
+                                id={`String2Beat15Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat16Measure${measure}`} className="grid grid-row-1 grid-col-16 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat16Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string2Beat16.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string2Beat16}
+                                onChange={(e) => handleChange(2, 16, measure)(e)}
+                                id={`String2Beat16Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat1Measure${measure}`} className="grid grid-row-1 bg-inherit grid-col-1 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 bg-inherit left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat1Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                                 {string3Beat1.split('').map((char, index) => {
@@ -479,16 +858,11 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                     }
                                 })}
                             </div>
-                            <input
-                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
-                                value={string3Beat1}
-                                onChange={(e) => handleChange(3, 1, measure)(e)}
-                                id={`String3Beat1Measure${measure}`}
-                            />
+                            <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string3Beat1} onChange={(e) => handleChange(3, 1, measure)(e)} id={`String3Beat1Measure${measure}`} />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-2 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat2Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -508,8 +882,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-3 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat3Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -529,8 +903,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-4 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat4Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -550,8 +924,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-5 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat5Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -571,8 +945,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-6 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat6Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -592,8 +966,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-7 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat7Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -613,8 +987,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-8 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat8Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -634,9 +1008,177 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat9Measure${measure}`} className="grid grid-row-1 grid-col-9 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat9Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat9.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat9}
+                                onChange={(e) => handleChange(3, 9, measure)(e)}
+                                id={`String3Beat9Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat10Measure${measure}`} className="grid grid-row-1 grid-col-10 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat10Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat10.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat10}
+                                onChange={(e) => handleChange(3, 10, measure)(e)}
+                                id={`String3Beat10Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat11Measure${measure}`} className="grid grid-row-1 grid-col-11 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat11Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat11.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat11}
+                                onChange={(e) => handleChange(3, 11, measure)(e)}
+                                id={`String3Beat11Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat12Measure${measure}`} className="grid grid-row-1 grid-col-12 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat12Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat12.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat12}
+                                onChange={(e) => handleChange(3, 12, measure)(e)}
+                                id={`String3Beat12Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat13Measure${measure}`} className="grid grid-row-1 grid-col-13 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat13Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat13.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat13}
+                                onChange={(e) => handleChange(3, 13, measure)(e)}
+                                id={`String3Beat13Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat14Measure${measure}`} className="grid grid-row-1 grid-col-14 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat14Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat14.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat14}
+                                onChange={(e) => handleChange(3, 14, measure)(e)}
+                                id={`String3Beat14Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat15Measure${measure}`} className="grid grid-row-1 grid-col-15 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat15Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat15.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat15}
+                                onChange={(e) => handleChange(3, 15, measure)(e)}
+                                id={`String3Beat15Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat16Measure${measure}`} className="grid grid-row-1 grid-col-16 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat16Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string3Beat16.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string3Beat16}
+                                onChange={(e) => handleChange(3, 16, measure)(e)}
+                                id={`String3Beat16Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat1Measure${measure}`} className="grid grid-row-1 bg-inherit grid-col-1 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 bg-inherit left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat1Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                                 {string4Beat1.split('').map((char, index) => {
@@ -647,16 +1189,11 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                     }
                                 })}
                             </div>
-                            <input
-                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
-                                value={string4Beat1}
-                                onChange={(e) => handleChange(4, 1, measure)(e)}
-                                id={`String4Beat1Measure${measure}`}
-                            />
+                            <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string4Beat1} onChange={(e) => handleChange(4, 1, measure)(e)} id={`String4Beat1Measure${measure}`} />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-2 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat2Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -676,8 +1213,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-3 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat3Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -697,8 +1234,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-4 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat4Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -718,8 +1255,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-5 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat5Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -739,8 +1276,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-6 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat6Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -760,8 +1297,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-7 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat7Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -781,8 +1318,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-8 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat8Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -802,9 +1339,177 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat9Measure${measure}`} className="grid grid-row-1 grid-col-9 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat9Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat9.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat9}
+                                onChange={(e) => handleChange(4, 9, measure)(e)}
+                                id={`String4Beat9Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat10Measure${measure}`} className="grid grid-row-1 grid-col-10 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat10Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat10.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat10}
+                                onChange={(e) => handleChange(4, 10, measure)(e)}
+                                id={`String4Beat10Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat11Measure${measure}`} className="grid grid-row-1 grid-col-11 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat11Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat11.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat11}
+                                onChange={(e) => handleChange(4, 11, measure)(e)}
+                                id={`String4Beat11Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat12Measure${measure}`} className="grid grid-row-1 grid-col-12 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat12Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat12.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat12}
+                                onChange={(e) => handleChange(4, 12, measure)(e)}
+                                id={`String4Beat12Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat13Measure${measure}`} className="grid grid-row-1 grid-col-13 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat13Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat13.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat13}
+                                onChange={(e) => handleChange(4, 13, measure)(e)}
+                                id={`String4Beat13Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat14Measure${measure}`} className="grid grid-row-1 grid-col-14 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat14Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat14.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat14}
+                                onChange={(e) => handleChange(4, 14, measure)(e)}
+                                id={`String4Beat14Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat15Measure${measure}`} className="grid grid-row-1 grid-col-15 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat15Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat15.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat15}
+                                onChange={(e) => handleChange(4, 15, measure)(e)}
+                                id={`String4Beat15Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat16Measure${measure}`} className="grid grid-row-1 grid-col-16 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat16Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string4Beat16.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string4Beat16}
+                                onChange={(e) => handleChange(4, 16, measure)(e)}
+                                id={`String4Beat16Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat1Measure${measure}`} className="grid grid-row-1 bg-inherit grid-col-1 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 bg-inherit left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat1Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                                 {string5Beat1.split('').map((char, index) => {
@@ -815,16 +1520,11 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                     }
                                 })}
                             </div>
-                            <input
-                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
-                                value={string5Beat1}
-                                onChange={(e) => handleChange(5, 1, measure)(e)}
-                                id={`String5Beat1Measure${measure}`}
-                            />
+                            <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string5Beat1} onChange={(e) => handleChange(5, 1, measure)(e)} id={`String5Beat1Measure${measure}`} />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-2 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat2Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -844,8 +1544,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-3 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat3Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -861,12 +1561,12 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                 className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
                                 value={string5Beat3}
                                 onChange={(e) => handleChange(5, 3, measure)(e)}
-                                id={`String5BeatMeasure${measure}`}
+                                id={`String5Beat3Measure${measure}`}
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-4 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat4Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -886,8 +1586,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-5 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat5Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -907,8 +1607,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-6 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat6Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -928,8 +1628,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-7 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat7Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -949,8 +1649,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-8 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat8Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -970,9 +1670,177 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat9Measure${measure}`} className="grid grid-row-1 grid-col-9 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat9Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat9.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat9}
+                                onChange={(e) => handleChange(5, 9, measure)(e)}
+                                id={`String5Beat9Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat10Measure${measure}`} className="grid grid-row-1 grid-col-10 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat10Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat10.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat10}
+                                onChange={(e) => handleChange(5, 10, measure)(e)}
+                                id={`String5Beat10Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat11Measure${measure}`} className="grid grid-row-1 grid-col-11 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat11Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat11.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat11}
+                                onChange={(e) => handleChange(5, 11, measure)(e)}
+                                id={`String5Beat11Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat12Measure${measure}`} className="grid grid-row-1 grid-col-12 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat12Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat12.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat12}
+                                onChange={(e) => handleChange(5, 12, measure)(e)}
+                                id={`String5Beat12Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat13Measure${measure}`} className="grid grid-row-1 grid-col-13 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat13Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat13.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat13}
+                                onChange={(e) => handleChange(5, 13, measure)(e)}
+                                id={`String5Beat13Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat14Measure${measure}`} className="grid grid-row-1 grid-col-14 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat14Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat14.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat14}
+                                onChange={(e) => handleChange(5, 14, measure)(e)}
+                                id={`String5Beat14Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat15Measure${measure}`} className="grid grid-row-1 grid-col-15 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat15Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat15.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat15}
+                                onChange={(e) => handleChange(5, 15, measure)(e)}
+                                id={`String5Beat15Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat16Measure${measure}`} className="grid grid-row-1 grid-col-16 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat16Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string5Beat16.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string5Beat16}
+                                onChange={(e) => handleChange(5, 16, measure)(e)}
+                                id={`String5Beat16Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat1Measure${measure}`} className="grid grid-row-1 bg-inherit grid-col-1 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 bg-inherit left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat1Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                                 {string6Beat1.split('').map((char, index) => {
@@ -983,16 +1851,11 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                     }
                                 })}
                             </div>
-                            <input
-                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
-                                value={string6Beat1}
-                                onChange={(e) => handleChange(6, 1, measure)(e)}
-                                id={`String6Beat1Measure${measure}`}
-                            />
+                            <input className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none" value={string6Beat1} onChange={(e) => handleChange(6, 1, measure)(e)} id={`String6Beat1Measure${measure}`} />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat2Measure${measure}`} className="grid grid-row-1 grid-col-2 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat2Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -1012,8 +1875,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat3Measure${measure}`} className="grid grid-row-1 grid-col-3 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat3Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -1033,8 +1896,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat4Measure${measure}`} className="grid grid-row-1 grid-col-4 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat4Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -1054,8 +1917,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat5Measure${measure}`} className="grid grid-row-1 grid-col-5 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat5Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -1075,8 +1938,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat6Measure${measure}`} className="grid grid-row-1 grid-col-6 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat6Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -1096,8 +1959,8 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat7Measure${measure}`} className="grid grid-row-1 grid-col-7 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat7Measure" + `${measure}`}`}></div>
                             <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
@@ -1117,11 +1980,11 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                             />
                         </div>
                     </div>
-                    <div className="grid grid-row-1 grid-col-1 items-center h-6 relative">
-                        <div className="bg-black h-0.5"></div>
+                    <div id={`beat8Measure${measure}`} className="grid grid-row-1 grid-col-8 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
                         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                             <div className={`w-1/6 h-full absolute ${"beat8Measure" + `${measure}`}`}></div>
-                            <div className="bg-transparent relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
                                 {string6Beat8.split('').map((char, index) => {
                                     if (char === ' ') {
                                         return <span key={index}>&nbsp;</span>;
@@ -1135,6 +1998,174 @@ function EditMeasure({ bpm, measure, duration, setDuration, setTabData, tabData,
                                 value={string6Beat8}
                                 onChange={(e) => handleChange(6, 8, measure)(e)}
                                 id={`String6Beat8Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat9Measure${measure}`} className="grid grid-row-1 grid-col-9 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat9Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat9.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat9}
+                                onChange={(e) => handleChange(6, 9, measure)(e)}
+                                id={`String6Beat9Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat10Measure${measure}`} className="grid grid-row-1 grid-col-10 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat10Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat10.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat10}
+                                onChange={(e) => handleChange(6, 10, measure)(e)}
+                                id={`String6Beat10Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat11Measure${measure}`} className="grid grid-row-1 grid-col-11 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat11Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat11.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat11}
+                                onChange={(e) => handleChange(6, 11, measure)(e)}
+                                id={`String6Beat11Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat12Measure${measure}`} className="grid grid-row-1 grid-col-12 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat12Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat12.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat12}
+                                onChange={(e) => handleChange(6, 12, measure)(e)}
+                                id={`String6Beat12Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat13Measure${measure}`} className="grid grid-row-1 grid-col-13 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat13Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat13.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat13}
+                                onChange={(e) => handleChange(6, 13, measure)(e)}
+                                id={`String6Beat13Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat14Measure${measure}`} className="grid grid-row-1 grid-col-14 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat14Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat14.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat14}
+                                onChange={(e) => handleChange(6, 14, measure)(e)}
+                                id={`String6Beat14Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat15Measure${measure}`} className="grid grid-row-1 grid-col-15 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat15Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat15.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat15}
+                                onChange={(e) => handleChange(6, 15, measure)(e)}
+                                id={`String6Beat15Measure${measure}`}
+                            />
+                        </div>
+                    </div>
+                    <div id={`beat16Measure${measure}`} className="grid grid-row-1 grid-col-16 items-center h-6 relative">
+                        <div className="bg-black h-0.5" style={{ width: '100%' }}></div>
+                        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div className={`w-1/6 h-full absolute ${"beat16Measure" + `${measure}`}`}></div>
+                            <div className="relative z-9" style={{ position: 'relative', zIndex: 9 }}>
+                                {string6Beat16.split('').map((char, index) => {
+                                    if (char === ' ') {
+                                        return <span key={index}>&nbsp;</span>;
+                                    } else {
+                                        return <span key={index}>{char}</span>;
+                                    }
+                                })}
+                            </div>
+                            <input
+                                className="bg-transparent absolute top-0 left-0 w-full h-full text-center focus:outline-none"
+                                value={string6Beat16}
+                                onChange={(e) => handleChange(6, 16, measure)(e)}
+                                id={`String6Beat16Measure${measure}`}
                             />
                         </div>
                     </div>

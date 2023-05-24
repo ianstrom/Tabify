@@ -131,25 +131,24 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
 
 
     const handleSubmitClick = (updatedProject) => {
-        setIsLoading(true)
         const tabDataArray = sortedTabData([...tabData.filter((data) => !(isNaN(data.fret)))])
         if (newTabData) {
             if (newTabData.length > 0) {
-                tabDataArray.push(...newTabData)
+                tabDataArray.push(...newTabData.filter((data) => !(isNaN(data.fret) || data.fret === null || data.fret === '')))
             }
         }
         if (updatedProject) {
             if (updatedProject.bpm !== project?.bpm) {
                 for (let i = 0; i < tabDataArray.length; i++) {
                     if (tabDataArray.time !== "") {
-                        tabDataArray[i].time = ((tabDataArray[i].measure - 1) * 4 + ((tabDataArray[i].beat - 1) / 2)) * (60 / updatedProject.bpm)
+                        tabDataArray[i].time = ((tabDataArray[i].measure - 1) * 4 + ((tabDataArray[i].beat - 1) / 4)) * (60 / updatedProject.bpm)
                         const duration = (tabDataArray[i].duration * project?.bpm) / 60
                         tabDataArray[i].duration = (60 / updatedProject.bpm) * duration
                     }
                 }
             }
         }
-
+        console.log(tabDataArray)
         return fetch(`/tab_data/${project?.id}`, {
             method: "POST",
             headers: {
@@ -300,7 +299,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
     }
 
     useEffect(() => {
-        const eigthNoteTime = (60 / project?.bpm) / 2
+        const eigthNoteTime = (60 / project?.bpm) / 4
         if (playOrPause) {
             let beat = currentBeat
             let measure = currentMeasure
@@ -314,7 +313,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                     before[3].style.cssText = ""
                     before[4].style.cssText = ""
                     before[5].style.cssText = ""
-                    if (beat === 8) {
+                    if (beat === 16) {
                         beat = 1
                         measure++
                     } else {
@@ -397,7 +396,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                     <button onClick={handleReviewClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">Reviews</button>
                     <button onClick={handlePublishHideClick} className="text-2xl border bg-gray-800 transition-colors duration-300 border-white text-white rounded-md px-4 py-2 hover:bg-white hover:text-gray-800">{project?.visibility ? "Hide" : "Publish"}</button>
                 </div>
-                <div className="flex flex-wrap overflow-y-scroll mb-52">
+                <div className="flex flex-wrap mb-52">
                     {measuresToDisplay}
                     {newMeasuresToDisplay}
                 </div>
@@ -414,6 +413,8 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
                         <div className="relative inline-flex">
                             <select id="duration" value={duration} defaultValue="Choose" onChange={handleSelectChange} className="appearance-none bg-gray-900 transition-colors duration-300 border border-white text-white px-4 py-2 pr-8 rounded-md leading-tight focus:outline-none hover:bg-white hover:bg-opacity-90 hover:text-gray-800">
                                 <option value="Choose" disabled>Choose a duration</option>
+                                <option value ="0.25">Sixteenth</option>
+                                <option value="0.375">Dotted Sixteenth</option>
                                 <option value="0.5">Eighth</option>
                                 <option value="0.75">Dotted Eighth</option>
                                 <option value="1">Quarter</option>

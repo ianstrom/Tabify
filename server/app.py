@@ -196,16 +196,15 @@ class TabDataByTabId(Resource):
             return make_response(jsonify({'error': "Request not allowed"}), 404)
         db.session.query(TabData).filter(TabData.tab_id == id).delete()
         db.session.commit()
-        for note in data:
-            try:
-                note = TabData(tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'],
-                               measure=note['measure'], duration=note['duration'], time=note['time'])
-                db.session.add(note)
-                db.session.commit()
-            except ValueError as e:
-                return make_response(jsonify({'errors': [str(e)]}), 422)
-            tab_data = [t.to_dict()
-                        for t in TabData.query.filter(TabData.tab_id == id).all()]
+        try:
+            tab_data = [TabData(tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'], measure=note['measure'], duration=note['duration'], time=note['time']) for note in data]
+            # note = TabData(tab_id=id, fret=note['fret'], string=note['string'], beat=note['beat'], measure=note['measure'], duration=note['duration'], time=note['time'])
+            db.session.add_all(tab_data)
+            db.session.commit()
+        except ValueError as e:
+            return make_response(jsonify({'errors': [str(e)]}), 422)
+        tab_data = [t.to_dict()
+                    for t in TabData.query.filter(TabData.tab_id == id).all()]
         return make_response(jsonify(tab_data), 201)
 
 
