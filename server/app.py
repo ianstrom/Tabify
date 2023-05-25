@@ -14,6 +14,10 @@ app.secret_key = b'kyushikiscool'
 def index(id=0):
     return render_template('index.html')
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('index.html')
+
 class CheckSession(Resource):
     def get(self):
         if not session.get('user_id'):
