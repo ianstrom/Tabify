@@ -158,6 +158,7 @@ function EditProject({ project, setProjectToView, setUserTabs, userTabs }) {
         })
             .then((r) => r.json())
             .then((data) => {
+                console.log('something')
                 setTabData(sortedTabData(data))
                 setNewTabData()
                 sessionStorage.removeItem("newTabData")
